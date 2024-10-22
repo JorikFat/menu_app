@@ -12,40 +12,32 @@ class CatalogBloc extends Bloc<CatalogAddProductEvent, CatalogState> {
   final CatalogProvider provider = CatalogProvider();
 
   CatalogBloc(this.cart) : super(const CatalogLoadState()) {
-    on<CatalogAddProductEvent>(_addProduct);
+    on<CatalogAddProductEvent>((event, _) => cart.add(CartAddProductEvent(event.product)));
     cart.stream.listen(_listenCart);
-    provider.fetchProducts().then((value) => emit(CatalogDataState(value.map(CartProduct.zero).toList())));
+    provider.fetchProducts().then(
+          (value) =>
+              emit(CatalogDataState(value.map(CartProduct.zero).toList())),
+        );
   }
 
-  void _listenCart(CartState cartState){
-    if(state is CatalogLoadState) return;
+  void _listenCart(CartState cartState) {
+    if (state is CatalogLoadState) return;
     state as CatalogDataState;
     final products = (state as CatalogDataState).products;
-    switch(cartState){
-      case CartEmptyState(): 
+    switch (cartState) {
+      case CartEmptyState():
         emit(CatalogDataState(products.map(CartProduct.zero).toList()));
         break;
       case CartDataState():
-        emit(CatalogDataState(products.map((it) => CartProduct.product(it, _productCount(it, cartState))).toList()));
+        emit(CatalogDataState(
+            products.map((it) => _map(it, cartState.products)).toList()));
         break;
     }
   }
 
-  void _addProduct(
-    CatalogAddProductEvent event,
-    Emitter<CatalogState> emit,
-  ) {
-    cart.add(CartAddProductEvent(event.product));
-  }
-
-  int _productCount(CartProduct product, CartDataState cart){
-    final contains = cart.products.contains(product);
-    if (contains){
-      final cartProduct = cart.products.firstWhere((it) => it.name == product.name);
-      final index = cart.products.indexOf(cartProduct);
-      return cart.products[index].count;
-    } else {
-      return 0;
-    }
+  CartProduct _map(CartProduct product, List<CartProduct> products) {
+    return products.contains(product)
+        ? products.firstWhere((it) => it.name == product.name)
+        : CartProduct.zero(product);
   }
 }

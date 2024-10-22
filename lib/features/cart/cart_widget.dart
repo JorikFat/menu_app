@@ -13,21 +13,23 @@ class CartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
-        bloc: bloc,
-        builder: (context, state) => switch (state) {
-              CartEmptyState() => const _Empty(),
-              CartDataState() => ListView.separated(
-                  itemCount: state.products.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
-                  itemBuilder: (context, index) => _CartProduct(
-                    product: state.products[index],
-                    increment: () =>
-                        bloc.add(CartAddProductEvent(state.products[index])),
-                    decrement: () =>
-                        bloc.add(CartRemoveProductEvent(state.products[index])),
-                  ),
-                ),
-            });
+      bloc: bloc,
+      builder: (context, state) => switch (state) {
+        CartEmptyState() => const _Empty(),
+        CartDataState() => ListView.separated(
+            itemCount: state.products.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            itemBuilder: (context, index) {
+              final CartProduct product = state.products[index];
+              return _CartProduct(
+                product: product,
+                increment: () => bloc.add(CartAddProductEvent(product)),
+                decrement: () => bloc.add(CartRemoveProductEvent(product)),
+              );
+            },
+          ),
+      },
+    );
   }
 }
 
@@ -61,13 +63,14 @@ class _CartProduct extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Text(product.name),
-            const Spacer(),
+            Expanded(child: Text(product.name)),
             IconButton(onPressed: decrement, icon: const Icon(Icons.remove)),
             Text(product.count.toString()),
             IconButton(onPressed: increment, icon: const Icon(Icons.add)),
-            const Spacer(),
-            Text('сумма:${product.amount}р'),
+            Expanded(child: Row(children: [
+              const Spacer(),
+              Text('сумма:${product.amount}р'),
+            ],))
           ],
         ),
       ),
