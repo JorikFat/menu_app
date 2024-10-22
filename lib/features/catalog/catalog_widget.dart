@@ -16,12 +16,11 @@ class CatalogWidget extends StatelessWidget {
       builder: (context, state) => ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: state.length,
-        separatorBuilder: (_, __) => const SizedBox(
-          height: 8,
-        ),
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, index) => InkWell(
           onTap: () => bloc.add(CatalogAddProductEvent(state[index])),
-          child: _Product(state[index])),
+          child: _Product(state[index]),
+        ),
       ),
     );
   }

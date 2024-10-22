@@ -4,6 +4,7 @@ import 'package:menu_app/features/cart/cart_bloc.dart';
 import 'package:menu_app/features/cart/cart_widget.dart';
 import 'package:menu_app/features/catalog/catalog_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_widget.dart';
+import 'package:menu_app/home_notifier.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,11 +16,9 @@ class HomeScreen extends StatefulWidget {
 class _State extends State<HomeScreen> {
   final CartBloc cart = CartBloc();
   late final CatalogBloc catalog = CatalogBloc(cart);
+  late final HomeNotifier homeNotifier = HomeNotifier(cart);
   int _pageIndex = 0;
-  late final List<Widget> pages = [
-    CatalogWidget(catalog),
-    CartWidget(cart)
-  ];
+  late final List<Widget> pages = [CatalogWidget(catalog), CartWidget(cart)];
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +31,20 @@ class _State extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageIndex,
         onTap: _changePage,
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),
             label: "Каталог",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: ValueListenableBuilder<int>(
+              valueListenable: homeNotifier,
+              builder: (context, value, _) => Badge(
+                label: Text(value.toString()),
+                child: const Icon(Icons.shopping_cart),
+              ),
+            ),
             label: "Корзина",
-            
           )
         ],
       ),

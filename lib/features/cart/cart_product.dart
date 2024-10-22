@@ -11,7 +11,7 @@ class CartProduct extends Product {
 
   CartProduct.zero(Product product) :count = 0, super(product.name, product.price);
 
-  CartProduct.product(Product product, [this.count = 1])
+  CartProduct.product(Product product, [this.count = 0])
       : super(
           product.name,
           product.price,

@@ -14,12 +14,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) {
     if(state is CartEmptyState){
-      emit(CartDataState.single(CartProduct.product(event.product)));
+      emit(CartDataState.single(CartProduct.product(event.product, 1)));
       return;
     }
     final products = (state as CartDataState).products;
     if(!products.contains(event.product)){
-      emit(CartDataState(products..add(CartProduct.product(event.product))));
+      emit(CartDataState(products..add(CartProduct.product(event.product, 1))));
     } else {
       final cartProduct = products.firstWhere((it) => it.name == event.product.name);
       final productIndex = products.indexOf(cartProduct);
