@@ -17,10 +17,6 @@ class CatalogBloc extends Bloc<CatalogAddProductEvent, CatalogState> {
     provider.fetchProducts().then((value) => emit(CatalogDataState(value.map(CartProduct.zero).toList())));
   }
 
-  Future<void> start() async {
-
-  }
-
   void _listenCart(CartState cartState){
     if(state is CatalogLoadState) return;
     state as CatalogDataState;
