@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/core.dart';
+import 'package:menu_app/features/cart/cart_bloc.dart';
+import 'package:menu_app/features/cart/cart_widget.dart';
 import 'package:menu_app/features/catalog/catalog_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_widget.dart';
 
@@ -11,11 +13,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
-  final CatalogBloc catalog = CatalogBloc();
+  final CartBloc cart = CartBloc();
+  late final CatalogBloc catalog = CatalogBloc(cart);
   int _pageIndex = 0;
   late final List<Widget> pages = [
     CatalogWidget(catalog),
-    CatalogWidget(catalog)
+    CartWidget(cart)
   ];
 
   @override
@@ -25,7 +28,7 @@ class _State extends State<HomeScreen> {
         title: const Text(APP_NAME),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: CatalogWidget(catalog),
+      body: pages[_pageIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageIndex,
         onTap: _changePage,
