@@ -1,4 +1,4 @@
-import 'package:menu_app/features/catalog/product.dart';
+import 'package:menu_app/features/product.dart';
 
 sealed class CartEvent {
   const CartEvent();

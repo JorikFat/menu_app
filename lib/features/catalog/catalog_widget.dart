@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_event.dart';
+import 'package:menu_app/features/catalog/catalog_state.dart';
 
 class CatalogWidget extends StatelessWidget {
   final CatalogBloc bloc;
@@ -11,19 +12,34 @@ class CatalogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CatalogBloc, List<CartProduct>>(
+    return BlocBuilder<CatalogBloc, CatalogState>(
       bloc: bloc,
-      builder: (context, state) => ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: state.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
-        itemBuilder: (context, index) => InkWell(
-          onTap: () => bloc.add(CatalogAddProductEvent(state[index])),
-          child: _Product(state[index]),
+      builder: (context, state) => switch(state){
+        CatalogLoadState() => const _Load(),
+        CatalogDataState() => ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: state.products.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (context, index) => InkWell(
+            onTap: () => bloc.add(CatalogAddProductEvent(state.products[index])),
+            child: _Product(state.products[index]),
+          ),
         ),
-      ),
+      }
     );
+  
   }
+}
+
+class _Load extends StatelessWidget {
+
+  const _Load();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: CircularProgressIndicator(),);
+  }
+
 }
 
 class _Product extends StatelessWidget {
