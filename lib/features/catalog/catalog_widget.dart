@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_bloc.dart';
-import 'package:menu_app/features/catalog/product.dart';
+import 'package:menu_app/features/catalog/catalog_event.dart';
 
 class CatalogWidget extends StatelessWidget {
   final CatalogBloc bloc;
@@ -10,7 +11,7 @@ class CatalogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CatalogBloc, List<Product>>(
+    return BlocBuilder<CatalogBloc, List<CartProduct>>(
       bloc: bloc,
       builder: (context, state) => ListView.separated(
         padding: const EdgeInsets.all(16),
@@ -18,14 +19,16 @@ class CatalogWidget extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(
           height: 8,
         ),
-        itemBuilder: (context, index) => _Product(state[index]),
+        itemBuilder: (context, index) => InkWell(
+          onTap: () => bloc.add(CatalogAddProductEvent(state[index])),
+          child: _Product(state[index])),
       ),
     );
   }
 }
 
 class _Product extends StatelessWidget {
-  final Product product;
+  final CartProduct product;
 
   const _Product(this.product, {super.key});
 
@@ -37,7 +40,12 @@ class _Product extends StatelessWidget {
         child: Row(
           children: [
             Expanded(child: Text(product.name)),
-            Text(product.price.toString())
+            Text(product.price.toString()),
+            if (product.count > 0)
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(product.count.toString()),
+              ),
           ],
         ),
       ),

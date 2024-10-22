@@ -14,18 +14,20 @@ class CartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
         bloc: bloc,
-        builder: (context, state) => switch(state){
-          CartEmptyState() => const _Empty(),
-          CartDataState() => ListView.separated(
-            itemCount: state.products.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) => _CartProduct(
-              product: state.products[index],
-              increment: () => bloc.add(CartAddProductEvent(state.products[index])),
-              decrement: () => bloc.add(CartRemoveProductEvent(state.products[index])),
-            ),
-          ),
-        });
+        builder: (context, state) => switch (state) {
+              CartEmptyState() => const _Empty(),
+              CartDataState() => ListView.separated(
+                  itemCount: state.products.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) => _CartProduct(
+                    product: state.products[index],
+                    increment: () =>
+                        bloc.add(CartAddProductEvent(state.products[index])),
+                    decrement: () =>
+                        bloc.add(CartRemoveProductEvent(state.products[index])),
+                  ),
+                ),
+            });
   }
 }
 
@@ -34,9 +36,10 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Корзина пуста"),);
+    return const Center(
+      child: Text("Корзина пуста"),
+    );
   }
-
 }
 
 class _CartProduct extends StatelessWidget {
@@ -54,18 +57,17 @@ class _CartProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.grey,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Expanded(
-              child: Text(product.name),
-            ),
+            Text(product.name),
+            const Spacer(),
             IconButton(onPressed: decrement, icon: const Icon(Icons.remove)),
             Text(product.count.toString()),
-            IconButton(onPressed: decrement, icon: const Icon(Icons.add)),
-            Text('сумма:${product.amount}р')
+            IconButton(onPressed: increment, icon: const Icon(Icons.add)),
+            const Spacer(),
+            Text('сумма:${product.amount}р'),
           ],
         ),
       ),

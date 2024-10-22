@@ -18,7 +18,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       return;
     }
     final products = (state as CartDataState).products;
-    if(products.contains(event.product)){
+    if(!products.contains(event.product)){
       emit(CartDataState(products..add(CartProduct.product(event.product))));
     } else {
       final cartProduct = products.firstWhere((it) => it.name == event.product.name);
@@ -36,7 +36,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final productIndex = products.indexOf(cartProduct);
     final newProduct = CartProduct.product(event.product, cartProduct.count - 1);
     if(newProduct.count == 0){
-      emit(CartDataState([...products..removeAt(productIndex)]));
+      final updatedProducts = [...products..removeAt(productIndex)];
+      emit(updatedProducts.isEmpty ? const CartEmptyState() : CartDataState(updatedProducts) );
     } else {
       emit(CartDataState([...products..[productIndex] = newProduct]));
     }

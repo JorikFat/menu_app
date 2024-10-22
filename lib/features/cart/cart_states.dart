@@ -11,6 +11,6 @@ class CartEmptyState extends CartState{
 class CartDataState extends CartState {
   final List<CartProduct> products;
 
-  CartDataState(this.products);
+  const CartDataState(this.products);
   CartDataState.single(CartProduct product) :this([product]);
 }
