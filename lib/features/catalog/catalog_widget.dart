@@ -1,40 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
-import 'package:menu_app/features/catalog/catalog_bloc.dart';
-import 'package:menu_app/features/catalog/catalog_event.dart';
+import 'package:menu_app/features/catalog/catalog_cubit.dart';
 import 'package:menu_app/features/catalog/catalog_state.dart';
 import 'package:menu_app/features/product.dart';
+import 'package:menu_app/widgets_ext.dart';
 
 class CatalogWidget extends StatelessWidget {
-  final CatalogBloc bloc;
+  final CatalogCubit cubit;
 
-  const CatalogWidget(this.bloc, {super.key});
+  const CatalogWidget(this.cubit, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CatalogBloc, CatalogState>(
-      bloc: bloc,
+    return BlocBuilder<CatalogCubit, CatalogState>(
+      bloc: cubit,
       builder: (context, state) => switch (state) {
         CatalogLoadState() => const _Load(),
-        CatalogDataState() => ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemCount: state.products.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final CartProduct product = state.products[index];
-              final _Product widget = _Product(product);
-              return InkWell(
-                onTap: () => bloc.add(CatalogAddProductEvent(product)),
-                child: product.count == 0
-                    ? widget
-                    : Badge(
-                        label: Text(product.count.toString()),
-                        child: widget,
-                      ),
-              );
-            },
+        CatalogDataState() => _List(
+            products: state.products,
+            onTap: cubit.addProduct,
           ),
+      },
+    );
+  }
+}
+
+class _List extends StatelessWidget {
+  final List<CartProduct> products;
+  final void Function(Product product) onTap;
+
+  const _List({
+    required this.products,
+    required this.onTap,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(16),
+      itemCount: products.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        final CartProduct product = products[index];
+        return InkWell(
+          onTap: () => onTap(product),
+          child: _Product(product).badge(product.count),
+        );
       },
     );
   }
