@@ -9,8 +9,6 @@ class CartProduct extends Product {
     super.price,
   );
 
-  CartProduct.zero(Product product) :count = 0, super(product.name, product.price);
-
   CartProduct.product(Product product, [this.count = 0])
       : super(
           product.name,

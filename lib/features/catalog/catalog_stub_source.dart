@@ -1,7 +1,7 @@
 import 'package:menu_app/features/product.dart';
 
-class CatalogProvider {
-  Future<List<Product>> fetchProducts() async {
+class CatalogStubSource {
+  static Future<List<Product>> fetchProducts() async {
     await Future.delayed(const Duration(seconds: 2));
     return const [
       Product("Шаурма", 200),

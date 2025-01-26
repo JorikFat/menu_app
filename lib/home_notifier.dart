@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menu_app/features/cart/cart_bloc.dart';
 import 'package:menu_app/features/cart/cart_states.dart';
 
+//TODO: replace by CartCountCubit
 class HomeNotifier extends ValueNotifier<int> {
   final CartBloc cart;
 

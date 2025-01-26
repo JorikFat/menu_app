@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart_bloc.dart';
+import 'package:menu_app/features/cart/cart_controller.dart';
 import 'package:menu_app/features/cart/cart_widget.dart';
 import 'package:menu_app/features/catalog/catalog_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_widget.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
-  final CartBloc cart = CartBloc();
+  late final CartBloc cart = CartBloc();
   late final CatalogBloc catalog = CatalogBloc(cart);
   late final HomeNotifier homeNotifier = HomeNotifier(cart);
   int _pageIndex = 0;
