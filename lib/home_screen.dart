@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/widgets_ext.dart';
 import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart_bloc.dart';
-import 'package:menu_app/features/cart/cart_controller.dart';
+import 'package:menu_app/features/cart/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/cart_widget.dart';
 import 'package:menu_app/features/catalog/catalog_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_widget.dart';
-import 'package:menu_app/home_notifier.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,9 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
-  late final CartBloc cart = CartBloc();
+  final CartBloc cart = CartBloc();
   late final CatalogBloc catalog = CatalogBloc(cart);
-  late final HomeNotifier homeNotifier = HomeNotifier(cart);
+  late final CartCountCubit cartCountCubit = CartCountCubit(cart);
   int _pageIndex = 0;
   late final List<Widget> pages = [CatalogWidget(catalog), CartWidget(cart)];
 
@@ -38,13 +39,11 @@ class _State extends State<HomeScreen> {
             label: "Каталог",
           ),
           BottomNavigationBarItem(
-            icon: ValueListenableBuilder<int>(
-              valueListenable: homeNotifier,
-              builder: (context, value, _) => Badge(
-                label: Text(value.toString()),
-                child: const Icon(Icons.shopping_cart),
-              ),
-            ),
+            icon: BlocBuilder<CartCountCubit, int>(
+                bloc: cartCountCubit,
+                builder: (context, state) =>
+                    const Icon(Icons.shopping_cart).badge(state)
+                ),
             label: "Корзина",
           )
         ],

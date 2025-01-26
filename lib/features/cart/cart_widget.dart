@@ -16,17 +16,10 @@ class CartWidget extends StatelessWidget {
       bloc: bloc,
       builder: (context, state) => switch (state) {
         CartEmptyState() => const _Empty(),
-        CartDataState() => ListView.separated(
-            itemCount: state.products.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final CartProduct product = state.products[index];
-              return _CartProduct(
-                product: product,
-                increment: () => bloc.add(CartAddProductEvent(product)),
-                decrement: () => bloc.add(CartRemoveProductEvent(product)),
-              );
-            },
+        CartDataState() => _List(
+            products: state.products,
+            onIncrement: (product) => bloc.add(CartAddProductEvent(product)),
+            onDecrement: (product) => bloc.add(CartRemoveProductEvent(product)),
           ),
       },
     );
@@ -40,6 +33,35 @@ class _Empty extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text("Корзина пуста"),
+    );
+  }
+}
+
+class _List extends StatelessWidget {
+  final List<CartProduct> products;
+  final void Function(CartProduct product) onIncrement;
+  final void Function(CartProduct product) onDecrement;
+
+  const _List({
+    super.key,
+    required this.products,
+    required this.onIncrement,
+    required this.onDecrement,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: products.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        final CartProduct product = products[index];
+        return _CartProduct(
+          product: product,
+          increment: () => onIncrement(product),
+          decrement: () => onDecrement(product),
+        );
+      },
     );
   }
 }
@@ -67,10 +89,12 @@ class _CartProduct extends StatelessWidget {
             IconButton(onPressed: decrement, icon: const Icon(Icons.remove)),
             Text(product.count.toString()),
             IconButton(onPressed: increment, icon: const Icon(Icons.add)),
-            Expanded(child: Row(children: [
-              const Spacer(),
-              Text('сумма:${product.amount}р'),
-            ],))
+            Expanded(
+              child: Text(
+                'сумма:${product.amount}р',
+                textAlign: TextAlign.end,
+              ),
+            ),
           ],
         ),
       ),

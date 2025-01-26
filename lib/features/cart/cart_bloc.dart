@@ -9,12 +9,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final CartController _controller = CartController();
 
   static CartProduct toCartProduct(MapEntry<Product, int> pair) =>
-    CartProduct.product(pair.key, pair.value);
+      CartProduct.product(pair.key, pair.value);
 
   CartBloc() : super(const CartEmptyState()) {
     on<CartAddProductEvent>(_addProduct);
     on<CartRemoveProductEvent>(_removeProduct);
   }
+
+  int get count => _controller.count;
 
   int countOf(Product product) => _controller.countOf(product);
 
@@ -31,9 +33,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) {
     _controller.removeProduct(event.product);
-    emit(_dataState);
+    emit(_controller.state.isEmpty ? const CartEmptyState() : _dataState);
   }
 
-  CartDataState get _dataState => CartDataState(_controller.state.entries.map(toCartProduct).toList());
+  CartDataState get _dataState =>
+      CartDataState(_controller.state.entries.map(toCartProduct).toList());
 }
-
