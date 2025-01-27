@@ -13,13 +13,14 @@ class CatalogCubit extends Cubit<CatalogState> {
 
   CatalogCubit({
     required this.cart,
-    required this.controller
-  }) :super(const CatalogLoadState()){
+    required this.controller,
+  }) : super(const CatalogLoadState()) {
     cart.stream.listen(_listenCart);
-    controller.init().then((value) => emit(CatalogDataState(value.map(CartProduct.product).toList())));
+    controller.init().then((value) =>
+        emit(CatalogDataState(value.map(CartProduct.product).toList())));
   }
 
-  void addProduct(Product product){
+  void addProduct(Product product) {
     cart.add(CartAddProductEvent(product));
   }
 
@@ -30,10 +31,10 @@ class CatalogCubit extends Cubit<CatalogState> {
         emit(CatalogDataState(products.map(CartProduct.product).toList()));
         break;
       case CartDataState():
-        emit(CatalogDataState(
-            products.map((it) => CartProduct.product(it, cart.countOf(it))).toList()));
+        emit(CatalogDataState(products
+            .map((it) => CartProduct.product(it, cart.countOf(it)))
+            .toList()));
         break;
     }
   }
-
 }

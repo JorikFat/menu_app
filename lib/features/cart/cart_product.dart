@@ -24,7 +24,6 @@ class CartProduct extends Product {
   int get hashCode => super.hashCode + count;
 
   @override
-  bool operator ==(Object other) {
-    return other is CartProduct && super == other && count == other.count;
-  }
+  bool operator ==(Object other) =>
+      other is CartProduct && super == other && count == other.count;
 }
