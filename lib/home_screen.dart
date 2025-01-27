@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/features/catalog/catalog_controller.dart';
 import 'package:menu_app/features/catalog/catalog_cubit.dart';
+import 'package:menu_app/features/catalog/catalog_stub_source.dart';
 import 'package:menu_app/widgets_ext.dart';
 import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart_bloc.dart';
@@ -17,7 +19,10 @@ class HomeScreen extends StatefulWidget {
 
 class _State extends State<HomeScreen> {
   final CartBloc cart = CartBloc();
-  late final CatalogCubit catalog = CatalogCubit(cart);
+  late final CatalogCubit catalog = CatalogCubit(
+    cart: cart,
+    controller: CatalogController(CatalogStubSource()),
+  );
   late final CartCountCubit cartCountCubit = CartCountCubit(cart);
   int _pageIndex = 0;
   late final List<Widget> pages = [
