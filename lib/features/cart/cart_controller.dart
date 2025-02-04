@@ -3,13 +3,9 @@ import 'package:menu_app/features/product.dart';
 class CartController {
   final Map<Product, int> _productsCount = {};
 
-  int get count {
-    try {
-      return _productsCount.values.reduce((value, element) => value + element);
-    } on StateError {
-      return 0;
-    }
-  }
+  int get count => _productsCount.isEmpty
+      ? 0
+      : _productsCount.values.reduce((value, element) => value + element);
 
   Map<Product, int> get state => Map.unmodifiable(_productsCount);
 
