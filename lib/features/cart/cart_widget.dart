@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/cart_bloc.dart';
 import 'package:menu_app/features/cart/cart_events.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
+import 'package:menu_app/features/cart/cart_products_presenter_cubit.dart';
 import 'package:menu_app/features/cart/cart_states.dart';
 
 class CartWidget extends StatelessWidget {
-  final CartBloc bloc;
+  final CartProductsPresenterBloc bloc;
 
   const CartWidget(this.bloc, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartBloc, CartState>(
+    return BlocBuilder<CartProductsPresenterBloc, CartState>(
       bloc: bloc,
       builder: (context, state) => switch (state) {
         CartEmptyState() => const _Empty(),

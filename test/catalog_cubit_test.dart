@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart_bloc.dart';
+import 'package:menu_app/features/cart/cart_cubit.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 @GenerateNiceMocks([MockSpec<CatalogSource>()])
 import 'package:menu_app/features/catalog/catalog_controller.dart';
@@ -13,7 +13,7 @@ import 'catalog_cubit_test.mocks.dart';
 
 void main() {
   group(CatalogCubit, () {
-    late CartBloc cart;
+    late CartCubit cart;
     late CatalogCubit catalog;
 
     const Product prod1 = Product('first', 1);
@@ -24,7 +24,7 @@ void main() {
         (_) => Future.delayed(Duration.zero, () => [prod1, prod2, prod3]));
 
     setUp(() {
-      cart = CartBloc();
+      cart = CartCubit.def();
       catalog =
           CatalogCubit(cart: cart, controller: CatalogController(mockSource));
     });

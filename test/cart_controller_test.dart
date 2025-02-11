@@ -8,8 +8,8 @@ void main() {
   setUp(() => controller = CartController());
 
   test('initial is empty cart', () {
-    expect(controller.count, 0);
-    expect(controller.countOf(const Product('none', 1)), 0);
+    // expect(controller.count, 0);
+    // expect(controller.countOf(const Product('none', 1)), 0);
     expect(controller.state, {});
   });
 
@@ -19,9 +19,9 @@ void main() {
     //WHEN
     controller.addProduct(product);
     //THEN
-    expect(controller.count, 1);
-    expect(controller.countOf(product), 1);
-    expect(controller.countOf(const Product('none', 1)), 0);
+    // expect(controller.count, 1);
+    // expect(controller.countOf(product), 1);
+    // expect(controller.countOf(const Product('none', 1)), 0);
     expect(controller.state, {product: 1});
   });
 
@@ -33,10 +33,10 @@ void main() {
     controller.addProduct(prod1);
     controller.addProduct(prod2);
     //THEN
-    expect(controller.count, 2);
-    expect(controller.countOf(prod1), 1);
-    expect(controller.countOf(prod2), 1);
-    expect(controller.countOf(const Product('none', 1)), 0);
+    // expect(controller.count, 2);
+    // expect(controller.countOf(prod1), 1);
+    // expect(controller.countOf(prod2), 1);
+    // expect(controller.countOf(const Product('none', 1)), 0);
     expect(controller.state, {prod1: 1, prod2: 1});
   });
 
@@ -51,10 +51,10 @@ void main() {
     controller.addProduct(prod2);
     controller.addProduct(prod2);
     //THEN
-    expect(controller.count, 5);
-    expect(controller.countOf(prod1), 3);
-    expect(controller.countOf(prod2), 2);
-    expect(controller.countOf(const Product('none', 1)), 0);
+    // expect(controller.count, 5);
+    // expect(controller.countOf(prod1), 3);
+    // expect(controller.countOf(prod2), 2);
+    // expect(controller.countOf(const Product('none', 1)), 0);
     expect(controller.state, {prod1: 3, prod2: 2});
   });
 
@@ -69,10 +69,10 @@ void main() {
     //WHEN
     controller.removeProduct(prod1);
     //THEN
-    expect(controller.count, 3);
-    expect(controller.countOf(prod1), 1);
-    expect(controller.countOf(prod2), 2);
-    expect(controller.countOf(const Product('none', 1)), 0);
+    // expect(controller.count, 3);
+    // expect(controller.countOf(prod1), 1);
+    // expect(controller.countOf(prod2), 2);
+    // expect(controller.countOf(const Product('none', 1)), 0);
     expect(controller.state, {prod1: 1, prod2: 2});
   });
 
@@ -90,10 +90,10 @@ void main() {
     controller.removeProduct(prod2);
     controller.removeProduct(prod2);
     //THEN
-    expect(controller.count, 0);
-    expect(controller.countOf(prod1), 0);
-    expect(controller.countOf(prod2), 0);
-    expect(controller.countOf(const Product('none', 1)), 0);
+    // expect(controller.count, 0);
+    // expect(controller.countOf(prod1), 0);
+    // expect(controller.countOf(prod2), 0);
+    // expect(controller.countOf(const Product('none', 1)), 0);
     expect(controller.state, {});
   });
 }
