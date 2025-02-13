@@ -11,7 +11,11 @@ class CartProductsPresenterBloc extends Bloc<CartEvent, CartState> {
   CartProductsPresenterBloc(this._cart) : super(_toCartState(_cart.state)) {
     on<CartAddProductEvent>(_addProduct);
     on<CartRemoveProductEvent>(_removeProduct);
+    _cart.stream.listen(_updateState);
   }
+
+  void _updateState(Map<Product, int> cartState) =>
+      emit(_toCartState(cartState));
 
   void _addProduct(
     CartAddProductEvent event,
