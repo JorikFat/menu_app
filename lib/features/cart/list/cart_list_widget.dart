@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/list/cart_events.dart';
+import 'package:menu_app/features/cart/list/cart_list_events.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
-import 'package:menu_app/features/cart/list/cart_products_presenter_bloc.dart';
-import 'package:menu_app/features/cart/list/cart_states.dart';
+import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
+import 'package:menu_app/features/cart/list/cart_list_states.dart';
 
-class CartWidget extends StatelessWidget {
-  final CartProductsPresenterBloc bloc;
+class CartListWidget extends StatelessWidget {
+  final CartListBloc bloc;
 
-  const CartWidget(this.bloc, {super.key});
+  const CartListWidget(this.bloc, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartProductsPresenterBloc, CartState>(
+    return BlocBuilder<CartListBloc, CartListState>(
       bloc: bloc,
       builder: (context, state) => switch (state) {
         CartEmptyState() => const _Empty(),
         CartDataState() => _List(
-            products: state.products,
-            onIncrement: (product) => bloc.add(CartAddProductEvent(product)),
-            onDecrement: (product) => bloc.add(CartRemoveProductEvent(product)),
+            products: state.list,
+            onIncrement: (product) => bloc.add(CartListAddProductEvent(product)),
+            onDecrement: (product) => bloc.add(CartListRemoveProductEvent(product)),
           ),
       },
     );
