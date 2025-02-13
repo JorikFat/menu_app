@@ -19,11 +19,4 @@ class CartProduct extends Product {
 
   @override
   String toString() => '$name, price:$price, count:$count';
-
-  @override
-  int get hashCode => super.hashCode + count;
-
-  @override
-  bool operator ==(Object other) =>
-      other is CartProduct && super == other && count == other.count;
 }

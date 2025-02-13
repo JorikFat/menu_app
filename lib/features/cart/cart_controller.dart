@@ -3,7 +3,9 @@ import 'package:menu_app/features/product.dart';
 class CartController {
   final Map<Product, int> _productsCount = {};
 
-  Map<Product, int> get state => Map.unmodifiable(_productsCount);
+  Map<Product, int> get state {
+    return Map.unmodifiable(_productsCount);
+  }
 
   void addProduct(Product product) {
     final int count = _productsCount[product] ?? 0;
