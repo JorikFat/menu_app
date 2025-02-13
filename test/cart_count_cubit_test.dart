@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:menu_app/features/cart/cart_cubit.dart';
-import 'package:menu_app/features/cart/cart_count_cubit.dart';
+import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/product.dart';
 
 Product get stubProduct => const Product('stub', 1);

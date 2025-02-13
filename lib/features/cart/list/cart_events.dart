@@ -15,3 +15,9 @@ class CartRemoveProductEvent extends CartEvent {
 
   CartRemoveProductEvent(this.product);
 }
+
+class CartUpdateEvent extends CartEvent {
+  final Map<Product, int> cartState;
+  
+  CartUpdateEvent(this.cartState);
+}
