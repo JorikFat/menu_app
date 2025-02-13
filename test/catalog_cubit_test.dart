@@ -3,8 +3,8 @@ import 'package:menu_app/features/cart/cart_cubit.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 @GenerateNiceMocks([MockSpec<CatalogSource>()])
 import 'package:menu_app/features/catalog/catalog_controller.dart';
-import 'package:menu_app/features/catalog/catalog_cubit.dart';
-import 'package:menu_app/features/catalog/catalog_state.dart';
+import 'package:menu_app/features/catalog/list/catalog_cubit.dart';
+import 'package:menu_app/features/catalog/list/catalog_state.dart';
 import 'package:menu_app/features/product.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

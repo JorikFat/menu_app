@@ -5,6 +5,9 @@ class Product {
   const Product(this.name, this.price);
 
   @override
+  String toString() => '$name, price:$price';
+
+  @override
   int get hashCode => name.hashCode;
   
   @override

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_products_presenter_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_controller.dart';
-import 'package:menu_app/features/catalog/catalog_cubit.dart';
-import 'package:menu_app/features/catalog/catalog_stub_source.dart';
+import 'package:menu_app/features/catalog/list/catalog_cubit.dart';
+import 'package:menu_app/features/catalog/data/catalog_stub_source.dart';
 import 'package:menu_app/widgets_ext.dart';
 import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart_cubit.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_widget.dart';
-import 'package:menu_app/features/catalog/catalog_widget.dart';
+import 'package:menu_app/features/catalog/list/catalog_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
