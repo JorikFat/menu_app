@@ -1,16 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
-import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_controller.dart';
 import 'package:menu_app/features/product.dart';
 
-class CatalogInteractorCubit extends Cubit<List<CartProduct>>{
+class CatalogInteractorCubit extends Cubit<Map<Product, int>> {
   final CartInteractorCubit cart;
   final CatalogController controller;
 
-  CatalogInteractorCubit(this.controller, this.cart) :super([]){
+  CatalogInteractorCubit(this.controller, this.cart) : super({}) {
     cart.stream.listen(_updateCatalog);
-    controller.init().then((catalog) => emit(_mapCartProducts(catalog, cart.state)));
+    controller
+        .init()
+        .then((catalog) => emit(_mapCartProducts(catalog, cart.state)));
   }
 
   void addProduct(Product product) => cart.add(product);
@@ -19,12 +20,9 @@ class CatalogInteractorCubit extends Cubit<List<CartProduct>>{
     emit(_mapCartProducts(controller.state, cartProducts));
   }
 
-  List<CartProduct> _mapCartProducts(
+  Map<Product, int> _mapCartProducts(
     List<Product> catalog,
     Map<Product, int> cart,
   ) =>
-      catalog
-          .map((it) => CartProduct(cart[it] ?? 0, it.name, it.price))
-          .toList();
-
+      Map.fromEntries(catalog.map((it) => MapEntry(it, cart[it] ?? 0)));
 }

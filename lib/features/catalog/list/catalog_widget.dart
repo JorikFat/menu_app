@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
-import 'package:menu_app/features/catalog/list/catalog_cubit.dart';
-import 'package:menu_app/features/catalog/list/catalog_state.dart';
+import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
+import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
+import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
 import 'package:menu_app/features/product.dart';
 import 'package:menu_app/widgets_ext.dart';
 
 class CatalogWidget extends StatelessWidget {
-  final CatalogCubit cubit;
+  final CatalogListBloc bloc;
 
-  const CatalogWidget(this.cubit, {super.key});
+  const CatalogWidget(this.bloc, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CatalogCubit, CatalogState>(
-      bloc: cubit,
+    return BlocBuilder<CatalogListBloc, CatalogListState>(
+      bloc: bloc,
       builder: (context, state) => switch (state) {
         CatalogLoadState() => const _Load(),
         CatalogDataState() => _List(
             products: state.products,
-            onTap: cubit.addProduct,
+            onTap: (product) => bloc.add(CatalogListAddEvent(product)),
           ),
       },
     );

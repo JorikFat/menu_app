@@ -3,8 +3,8 @@ import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 @GenerateNiceMocks([MockSpec<CatalogSource>()])
 import 'package:menu_app/features/catalog/catalog_controller.dart';
-import 'package:menu_app/features/catalog/list/catalog_cubit.dart';
-import 'package:menu_app/features/catalog/list/catalog_state.dart';
+import 'package:menu_app/features/catalog/catalog_interactor_cubit.dart';
+import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
 import 'package:menu_app/features/product.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -12,9 +12,9 @@ import 'package:mockito/mockito.dart';
 import 'catalog_cubit_test.mocks.dart';
 
 void main() {
-  group(CatalogCubit, () {
+  group(CatalogInteractorCubit, () {
     late CartInteractorCubit cart;
-    late CatalogCubit catalog;
+    late CatalogInteractorCubit catalog;
 
     const Product prod1 = Product('first', 1);
     const Product prod2 = Product('second', 2);
@@ -26,7 +26,7 @@ void main() {
     setUp(() {
       cart = CartInteractorCubit.def();
       catalog =
-          CatalogCubit(cart: cart, controller: CatalogController(mockSource));
+          CatalogInteractorCubit(CatalogController(mockSource), cart);
     });
 
     tearDown(() async {

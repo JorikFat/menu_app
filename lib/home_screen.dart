@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_controller.dart';
-import 'package:menu_app/features/catalog/list/catalog_cubit.dart';
+import 'package:menu_app/features/catalog/catalog_interactor_cubit.dart';
 import 'package:menu_app/features/catalog/data/catalog_stub_source.dart';
+import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/widgets_ext.dart';
 import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
@@ -19,18 +20,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
-  final CartInteractorCubit cartCubit = CartInteractorCubit.def();
-  late final CartListBloc cart = CartListBloc(cartCubit);
-  late final CatalogCubit catalog = CatalogCubit(
-    cart: cartCubit,
-    controller: CatalogController(CatalogStubSource()),
+  final CartInteractorCubit cartInteractor = CartInteractorCubit.def();
+  late final CatalogInteractorCubit catalogInteractor = CatalogInteractorCubit(
+    CatalogController(CatalogStubSource()),
+    cartInteractor,
   );
-  late final CartCountCubit cartCountCubit = CartCountCubit(cartCubit);
-  int _pageIndex = 0;
+  late final CartCountCubit cartCountCubit = CartCountCubit(cartInteractor);
+
+  late final CatalogListBloc catalogBloc = CatalogListBloc(catalogInteractor);
+  late final CartListBloc cartBloc = CartListBloc(cartInteractor);
   late final List<Widget> pages = [
-    CatalogWidget(catalog),
-    CartListWidget(cart),
+    CatalogWidget(catalogBloc),
+    CartListWidget(cartBloc),
   ];
+  int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {

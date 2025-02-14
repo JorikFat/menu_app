@@ -1,14 +1,14 @@
 import 'package:menu_app/features/cart/cart_product.dart';
 
-sealed class CatalogState {
-  const CatalogState();
+sealed class CatalogListState {
+  const CatalogListState();
 }
 
-class CatalogLoadState extends CatalogState {
+class CatalogLoadState extends CatalogListState {
   const CatalogLoadState();
 }
 
-class CatalogDataState extends CatalogState {
+class CatalogDataState extends CatalogListState {
   final List<CartProduct> products;
 
   const CatalogDataState(this.products);
