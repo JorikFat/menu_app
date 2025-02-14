@@ -20,15 +20,17 @@ void main() {
     });
 
     tearDown(() async {
+      await Future((){});
       await cart.close();
       await bloc.close();
     });
 
-    // test('initial count is 0', () {
-    //   expect(bloc.state, const CartEmptyState());
-    // });
+    test('initial count is empty', () {
+      expect(bloc.state, const CartEmptyState());
+    });
 
     test('add 1 product', () async {
+      const Product stubProduct = Product('stub', 1);
       //GIVEN
       // expect(count.state, 0);
       expect(bloc.state, const CartEmptyState());

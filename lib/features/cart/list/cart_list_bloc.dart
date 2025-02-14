@@ -8,7 +8,7 @@ import 'package:menu_app/features/product.dart';
 class CartListBloc extends Bloc<CartListEvent, CartListState> {
   final CartInteractorCubit _cart;
 
-  CartListBloc(this._cart) : super(_toCartState(_cart.state)) {
+  CartListBloc(this._cart) : super(_toCartListState(_cart.state)) {
     _cart.stream.listen((cartState) => add(CartListUpdateEvent(cartState)));
     on<CartListAddProductEvent>(_addProduct);
     on<CartListRemoveProductEvent>(_removeProduct);
@@ -19,7 +19,7 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
     CartListUpdateEvent event,
     Emitter<CartListState> emit,
   ) { 
-    emit(_toCartState(event.cartState));
+    emit(_toCartListState(event.cartState));
   }
 
   void _addProduct(
@@ -37,7 +37,7 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
   }
 }
 
-CartListState _toCartState(Map<Product, int> map) => map.isEmpty
+CartListState _toCartListState(Map<Product, int> map) => map.isEmpty
     ? const CartEmptyState()
     : CartDataState(map.entries
         .map((entry) =>
