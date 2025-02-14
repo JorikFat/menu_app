@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/cart_cubit.dart';
+import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
 import 'package:menu_app/features/product.dart';
 
 class CartCountCubit extends Cubit<int> {
-  final CartCubit _cart;
+  final CartInteractorCubit _cart;
 
   CartCountCubit(this._cart) : super(0) {
     _cart.stream.listen((cartState) {

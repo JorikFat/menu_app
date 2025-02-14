@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/cart_cubit.dart';
+import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_list_events.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
 import 'package:menu_app/features/product.dart';
 
 class CartListBloc extends Bloc<CartListEvent, CartListState> {
-  final CartCubit _cart;
+  final CartInteractorCubit _cart;
 
   CartListBloc(this._cart) : super(_toCartState(_cart.state)) {
     _cart.stream.listen((cartState) => add(CartListUpdateEvent(cartState)));

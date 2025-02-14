@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart_cubit.dart';
+import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
@@ -11,11 +11,11 @@ Product get stubProduct => const Product('stub', 1);
 void main() {
 
   group(CartListBloc, () {
-    late CartCubit cart;
+    late CartInteractorCubit cart;
     late CartListBloc bloc;
 
     setUp(() {
-      cart = CartCubit.def();
+      cart = CartInteractorCubit.def();
       bloc = CartListBloc(cart);
     });
 

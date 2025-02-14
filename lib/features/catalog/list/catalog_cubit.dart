@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/cart_cubit.dart';
+import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_controller.dart';
 import 'package:menu_app/features/catalog/list/catalog_state.dart';
@@ -7,7 +7,7 @@ import 'package:menu_app/features/product.dart';
 
 class CatalogCubit extends Cubit<CatalogState> {
   final CatalogController controller;
-  final CartCubit cart;
+  final CartInteractorCubit cart;
 
   CatalogCubit({
     required this.cart,

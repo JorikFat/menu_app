@@ -1,19 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/cart_controller.dart';
-import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/product.dart';
 
-class CartCubit extends Cubit<Map<Product, int>> {
+class CartInteractorCubit extends Cubit<Map<Product, int>> {
   final CartController _controller;
 
-  static CartProduct toCartProduct(MapEntry<Product, int> pair) =>
-      CartProduct.product(pair.key, pair.value);
-
-  factory CartCubit.def() {
-    return CartCubit(CartController());
+  factory CartInteractorCubit.def() {
+    return CartInteractorCubit(CartController());
   }
 
-  CartCubit(this._controller) : super(_controller.state);
+  CartInteractorCubit(this._controller) : super(_controller.state);
 
   void add(Product product){
     _controller.addProduct(product);
