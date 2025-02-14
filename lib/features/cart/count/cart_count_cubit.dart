@@ -6,9 +6,7 @@ class CartCountCubit extends Cubit<int> {
   final CartInteractorCubit _cart;
 
   CartCountCubit(this._cart) : super(0) {
-    _cart.stream.listen((cartState) {
-      emit(_count(cartState));
-    });
+    _cart.stream.listen((cartState) => emit(_count(cartState)));
   }
 
   int _count(Map<Product, int> cartState) => cartState.isEmpty
