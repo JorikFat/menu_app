@@ -9,10 +9,10 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
   final CartInteractor _cart;
 
   CartListBloc(this._cart) : super(_toCartListState(_cart.state)) {
-    _cart.listen((cartState) => add(CartListUpdateEvent(cartState)));
     on<CartListAddProductEvent>(_addProduct);
     on<CartListRemoveProductEvent>(_removeProduct);
     on<CartListUpdateEvent>(_update);
+    _cart.listen((cartState) => add(CartListUpdateEvent(cartState)));
   }
 
   void _update(

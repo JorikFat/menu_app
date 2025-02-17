@@ -26,11 +26,13 @@ class CartInteractor {
     void Function(Object error)? onError,
     void Function()? onDone,
     bool? cancelOnError,
-  }) =>
+  }) {
       _streamController.stream.listen(
         onData,
         onError: onError,
         onDone: onDone,
         cancelOnError: cancelOnError,
       );
+      onData(_controller.state);
+  }
 }
