@@ -6,4 +6,5 @@ Bloc dependencies example
 ![image](https://github.com/user-attachments/assets/3735d059-1522-4663-b7de-702f25e0dc47)
 
 ## Classes structure
-![image](https://github.com/user-attachments/assets/724cec5a-6fad-4c64-97c5-7b04a660c9b5)
+![image](https://github.com/user-attachments/assets/1b3810ff-c914-4488-a935-bce6a2563ae5)
+
