@@ -1,33 +1,30 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:menu_app/features/cart/cart_controller.dart';
-import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
+import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/product.dart';
+import 'package:test/test.dart';
 
 void main() {
   late CartController controller;
-  late CartInteractorCubit cubit;
+  late CartInteractor interactor;
 
   setUp(() {
     controller = CartController();
-    cubit = CartInteractorCubit(controller);
+    interactor = CartInteractor(controller);
   });
 
-  tearDown(() async {
-    await cubit.close();
-  });
-
-  test('initial is empty cart', () {
-    expect(cubit.state, {});
+  test('initial is empty',(){
+    expect(interactor.state, {});
   });
 
   test('add one product', () async {
     //GIVEN
-    const Product product = Product('stub', 1);
+    const Product prod1 = Product('stub1', 1);
+    const Product prod2 = Product('stub2', 2);
     //WHEN
-    cubit.add(product);
-    // await Future((){});
+    interactor.add(prod1);
+    interactor.add(prod2);
     //THEN
-    expect(cubit.state, {product: 1});
+    expect(interactor.state, {prod1: 1, prod2: 1});
   });
 
   test('add two products', () {
@@ -35,10 +32,10 @@ void main() {
     const Product prod1 = Product('stub1', 1);
     const Product prod2 = Product('stub2', 2);
     //WHEN
-    cubit.add(prod1);
-    cubit.add(prod2);
+    interactor.add(prod1);
+    interactor.add(prod2);
     //THEN
-    expect(cubit.state, {prod1: 1, prod2: 1});
+    expect(interactor.state, {prod1: 1, prod2: 1});
   });
 
   test('add one product 3 times and second 2 times', (){
@@ -46,43 +43,43 @@ void main() {
     const Product prod1 = Product('stub1', 1);
     const Product prod2 = Product('stub2', 2);
     //WHEN
-    cubit.add(prod1);
-    cubit.add(prod1);
-    cubit.add(prod1);
-    cubit.add(prod2);
-    cubit.add(prod2);
+    interactor.add(prod1);
+    interactor.add(prod1);
+    interactor.add(prod1);
+    interactor.add(prod2);
+    interactor.add(prod2);
     //THEN
-    expect(cubit.state, {prod1: 3, prod2: 2});
+    expect(interactor.state, {prod1: 3, prod2: 2});
   });
 
   test('remove one product', (){
     //GIVEN
     const Product prod1 = Product('stub1', 1);
     const Product prod2 = Product('stub2', 2);
-    cubit.add(prod1);
-    cubit.add(prod1);
-    cubit.add(prod2);
-    cubit.add(prod2);
+    interactor.add(prod1);
+    interactor.add(prod1);
+    interactor.add(prod2);
+    interactor.add(prod2);
     //WHEN
-    cubit.remove(prod1);
+    interactor.remove(prod1);
     //THEN
-    expect(cubit.state, {prod1: 1, prod2: 2});
+    expect(interactor.state, {prod1: 1, prod2: 2});
   });
 
-  test('remove all products', (){
+    test('remove all products', (){
     //GIVEN
     const Product prod1 = Product('stub1', 1);
     const Product prod2 = Product('stub2', 2);
-    cubit.add(prod1);
-    cubit.add(prod1);
-    cubit.add(prod2);
-    cubit.add(prod2);
+    interactor.add(prod1);
+    interactor.add(prod1);
+    interactor.add(prod2);
+    interactor.add(prod2);
     //WHEN
-    cubit.remove(prod1);
-    cubit.remove(prod1);
-    cubit.remove(prod2);
-    cubit.remove(prod2);
+    interactor.remove(prod1);
+    interactor.remove(prod1);
+    interactor.remove(prod2);
+    interactor.remove(prod2);
     //THEN
-    expect(cubit.state, {});
+    expect(interactor.state, {});
   });
 }

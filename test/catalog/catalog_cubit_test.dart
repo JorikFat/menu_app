@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
+import 'package:menu_app/features/cart/cart_controller.dart';
+import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 @GenerateNiceMocks([MockSpec<CatalogSource>()])
 import 'package:menu_app/features/catalog/catalog_controller.dart';
@@ -13,7 +14,7 @@ import 'catalog_cubit_test.mocks.dart';
 
 void main() {
   group(CatalogInteractorCubit, () {
-    late CartInteractorCubit cart;
+    late CartInteractor cart;
     late CatalogInteractorCubit catalog;
 
     const Product prod1 = Product('first', 1);
@@ -24,14 +25,13 @@ void main() {
         (_) => Future.delayed(Duration.zero, () => [prod1, prod2, prod3]));
 
     setUp(() {
-      cart = CartInteractorCubit.def();
+      cart = CartInteractor(CartController());
       catalog =
           CatalogInteractorCubit(CatalogController(mockSource), cart);
     });
 
     tearDown(() async {
       await Future((){});
-      await cart.close();
       await catalog.close();
     });
 
