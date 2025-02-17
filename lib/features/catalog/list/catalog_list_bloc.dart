@@ -6,7 +6,7 @@ import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
 import 'package:menu_app/features/product.dart';
 
 class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
-  final CatalogInteractorCubit interactor;
+  final CatalogInteractor interactor;
 
   CatalogListBloc(this.interactor) : super(const CatalogLoadState()) {
     on<CatalogListUpdateEvent>(_updateCatalog);

@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _State extends State<HomeScreen> {
   final CartController cartController = CartController();
   late final CartInteractor cartInteractor = CartInteractor(cartController);
-  late final CatalogInteractorCubit catalogInteractor = CatalogInteractorCubit(
+  late final CatalogInteractor catalogInteractor = CatalogInteractor(
     CatalogController(CatalogStubSource()),
     cartInteractor,
   );

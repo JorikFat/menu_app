@@ -4,17 +4,19 @@ import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/catalog/catalog_controller.dart';
 import 'package:menu_app/features/product.dart';
 
-class CatalogInteractorCubit {
+class CatalogInteractor {
   final _streamController = StreamController<Map<Product, int>>.broadcast();
   final CartInteractor cart;
   final CatalogController controller;
 
-  CatalogInteractorCubit(this.controller, this.cart) {
+  CatalogInteractor(this.controller, this.cart) {
     cart.listen(_updateCatalog);
     controller
         .init()
         .then((catalog) => _streamController.add(_mapCartProducts(catalog, cart.state)));
   }
+
+  Map<Product, int> get state => _mapCartProducts(controller.state, cart.state);
 
   void addProduct(Product product) => cart.add(product);
 
