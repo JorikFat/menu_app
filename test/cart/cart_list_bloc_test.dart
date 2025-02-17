@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart_interactor_cubit.dart';
+import 'package:menu_app/features/cart/cart_controller.dart';
+import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
-import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
 import 'package:menu_app/features/product.dart';
@@ -11,17 +11,16 @@ Product get stubProduct => const Product('stub', 1);
 void main() {
 
   group(CartListBloc, () {
-    late CartInteractorCubit cart;
+    late CartInteractor cart;
     late CartListBloc bloc;
 
     setUp(() {
-      cart = CartInteractorCubit.def();
+      cart = CartInteractor(CartController());
       bloc = CartListBloc(cart);
     });
 
     tearDown(() async {
       await Future((){});
-      await cart.close();
       await bloc.close();
     });
 
@@ -30,17 +29,14 @@ void main() {
     });
 
     test('add 1 product', () async {
-      const Product stubProduct = Product('stub', 1);
       //GIVEN
-      // expect(count.state, 0);
+      const Product stubProduct = Product('stub', 1);
       expect(bloc.state, const CartEmptyState());
-      // expect(bloc.state, const CartDataState([]));
       //WHEN
       cart.add(stubProduct);
       await Future((){});
       //THEN
-      // expect((bloc.state as CartDataState).list, [CartProduct.product(stubProduct, 1)]);
-      expect(bloc.state, CartDataState([CartProduct.product(stubProduct, 1)]));
+      expect(bloc.state, CartDataState([CartProduct(1, stubProduct.name, stubProduct.price)]));
     });
 
     // test('add 3 products', () async {
