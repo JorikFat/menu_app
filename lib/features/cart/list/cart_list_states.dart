@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 
 sealed class CartListState {
@@ -28,5 +29,5 @@ class CartDataState extends CartListState {
 
   @override
   bool operator ==(Object other) =>
-      other is CartDataState && list == other.list;
+      other is CartDataState && listEquals(list, other.list);
 }

@@ -30,57 +30,64 @@ void main() {
 
     test('add 1 product', () async {
       //GIVEN
-      const Product stubProduct = Product('stub', 1);
       expect(bloc.state, const CartEmptyState());
       //WHEN
       cart.add(stubProduct);
       await Future((){});
       //THEN
-      expect(bloc.state, CartDataState([CartProduct(1, stubProduct.name, stubProduct.price)]));
+      expect(
+        bloc.state, 
+        CartDataState([CartProduct(1, stubProduct.name, stubProduct.price)]));
     });
 
-    // test('add 3 products', () async {
-    //   //GIVEN
-    //   expect(count.state, 0);
-    //   //WHEN
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   await Future((){});
-    //   //THEN
-    //   expect(count.state, 3);
-    // });
+    test('add 3 products', () async {
+      //GIVEN
+      expect(bloc.state, const CartEmptyState());
+      //WHEN
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      await Future((){});
+      //THEN
+      expect(
+        bloc.state,
+        CartDataState([CartProduct(3, stubProduct.name, stubProduct.price)]));
+    });
 
-    // test('remove 1 products', () async {
-    //   //GIVEN
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   await Future((){});
-    //   expect(count.state, 5);
-    //   //WHEN
-    //   cart.remove(stubProduct);
-    //   await Future((){});
-    //   //THEN
-    //   expect(count.state, 4);
-    // });
+    test('remove 1 products', () async {
+      //GIVEN
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      await Future((){});
+      CartDataState([CartProduct(5, stubProduct.name, stubProduct.price)]);
+      //WHEN
+      cart.remove(stubProduct);
+      await Future((){});
+      //THEN
+      expect(
+        bloc.state,
+        CartDataState([CartProduct(4, stubProduct.name, stubProduct.price)]));
+    });
 
-    // test('remove full products', () async {
-    //   //GIVEN
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   cart.add(stubProduct);
-    //   await Future((){});
-    //   expect(count.state, 3);
-    //   //WHEN
-    //   cart.remove(stubProduct);
-    //   cart.remove(stubProduct);
-    //   cart.remove(stubProduct);
-    //   await Future((){});
-    //   //THEN
-    //   expect(count.state, 0);
-    // });
+    test('remove full products', () async {
+      //GIVEN
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      cart.add(stubProduct);
+      await Future((){});
+      expect(
+        bloc.state,
+        CartDataState([CartProduct(3, stubProduct.name, stubProduct.price)]));
+      //WHEN
+      cart.remove(stubProduct);
+      cart.remove(stubProduct);
+      cart.remove(stubProduct);
+      await Future((){});
+      //THEN
+      expect(bloc.state, const CartEmptyState());
+    });
   });
 }
