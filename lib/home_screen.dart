@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
@@ -43,7 +42,7 @@ class _State extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(APP_NAME),
+        title: const Text("Menu App"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: pages[_pageIndex],

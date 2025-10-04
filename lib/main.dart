@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:menu_app/core.dart';
 import 'package:menu_app/home_screen.dart';
 
 void main() {
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: APP_NAME,
+      title: "Menu App",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
