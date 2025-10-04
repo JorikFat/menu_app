@@ -9,13 +9,6 @@ class CartProduct extends Product {
     super.price,
   );
 
-  @deprecated
-  CartProduct.product(Product product, [this.count = 0])
-      : super(
-          product.name,
-          product.price,
-        );
-
   int get amount => price * count;
 
   @override
