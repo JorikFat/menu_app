@@ -20,4 +20,8 @@ class Cart {
       _productsCount[product] = count - 1;
     }
   }
+
+  void clear(){
+    _productsCount.clear();
+  }
 }

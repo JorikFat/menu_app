@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/features/cart/amount/amount_bloc.dart';
 import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
@@ -17,5 +18,8 @@ final cartProviders = [
   ),
   BlocProvider<CartCountCubit>(
     create: (context) => CartCountCubit(context.read<CartInteractor>()),
-  )
+  ),
+  BlocProvider<AmountBloc>(
+    create: (context) => AmountBloc(context.read<CartInteractor>()),
+  ),
 ];

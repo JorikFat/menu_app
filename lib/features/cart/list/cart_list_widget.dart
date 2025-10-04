@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/features/cart/amount/amount_widget.dart';
 import 'package:menu_app/features/cart/list/cart_list_events.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
@@ -52,17 +53,24 @@ class _List extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: products.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
-      itemBuilder: (context, index) {
-        final CartProduct product = products[index];
-        return _CartProduct(
-          product: product,
-          increment: () => onIncrement(product),
-          decrement: () => onDecrement(product),
-        );
-      },
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.separated(
+            itemCount: products.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            itemBuilder: (context, index) {
+              final CartProduct product = products[index];
+              return _CartProduct(
+                product: product,
+                increment: () => onIncrement(product),
+                decrement: () => onDecrement(product),
+              );
+            },
+          ),
+        ),
+        const AmountWidget(),
+      ],
     );
   }
 }
@@ -92,7 +100,7 @@ class _CartProduct extends StatelessWidget {
             IconButton(onPressed: increment, icon: const Icon(Icons.add)),
             Expanded(
               child: Text(
-                'сумма:${product.amount}р',//TODO: move text to state
+                'сумма:${product.amount}р', //TODO: move text to state
                 textAlign: TextAlign.end,
               ),
             ),
