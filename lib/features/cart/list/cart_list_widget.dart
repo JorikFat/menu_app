@@ -6,20 +6,21 @@ import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
 
 class CartListWidget extends StatelessWidget {
-  final CartListBloc bloc;
-
-  const CartListWidget(this.bloc, {super.key});
+  const CartListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartListBloc, CartListState>(
-      bloc: bloc,
       builder: (context, state) => switch (state) {
         CartEmptyState() => const _Empty(),
         CartDataState() => _List(
             products: state.list,
-            onIncrement: (product) => bloc.add(CartListAddProductEvent(product)),
-            onDecrement: (product) => bloc.add(CartListRemoveProductEvent(product)),
+            onIncrement: (product) => context
+                .read<CartListBloc>()
+                .add(CartListAddProductEvent(product)),
+            onDecrement: (product) => context
+                .read<CartListBloc>()
+                .add(CartListRemoveProductEvent(product)),
           ),
       },
     );
@@ -91,7 +92,7 @@ class _CartProduct extends StatelessWidget {
             IconButton(onPressed: increment, icon: const Icon(Icons.add)),
             Expanded(
               child: Text(
-                'сумма:${product.amount}р',
+                'сумма:${product.amount}р',//TODO: move text to state
                 textAlign: TextAlign.end,
               ),
             ),

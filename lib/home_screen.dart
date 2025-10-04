@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/cart.dart';
-import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
-import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_widget.dart';
-import 'package:menu_app/features/catalog/catalog.dart';
-import 'package:menu_app/features/catalog/catalog_interactor.dart';
-import 'package:menu_app/features/catalog/data/catalog_stub_source.dart';
-import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/features/catalog/list/catalog_widget.dart';
 import 'package:menu_app/widgets_ext.dart';
 
@@ -20,21 +13,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
-  //TODO: create factories
-  final Cart cart = Cart();
-  late final CartInteractor cartInteractor = CartInteractor(cart);
-  late final CatalogInteractor catalogInteractor = CatalogInteractor(
-    catalog: Catalog(),
-    cart: cartInteractor,
-    sourse: CatalogStubSource(),
-  );
-  late final CartCountCubit cartCountCubit = CartCountCubit(cartInteractor);
-
-  late final CatalogListBloc catalogBloc = CatalogListBloc(catalogInteractor);
-  late final CartListBloc cartBloc = CartListBloc(cartInteractor);
-  late final List<Widget> pages = [
-    CatalogWidget(catalogBloc),
-    CartListWidget(cartBloc),
+  final List<Widget> pages = const [
+    CatalogWidget(),
+    CartListWidget(),
   ];
   int _pageIndex = 0;
 
@@ -56,7 +37,6 @@ class _State extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: BlocBuilder<CartCountCubit, int>(
-                bloc: cartCountCubit,
                 builder: (context, state) =>
                     const Icon(Icons.shopping_cart).badge(state)),
             label: "Корзина",

@@ -8,19 +8,19 @@ import 'package:menu_app/features/product/product.dart';
 import 'package:menu_app/widgets_ext.dart';
 
 class CatalogWidget extends StatelessWidget {
-  final CatalogListBloc bloc;
 
-  const CatalogWidget(this.bloc, {super.key});
+  const CatalogWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CatalogListBloc, CatalogListState>(
-      bloc: bloc,
       builder: (context, state) => switch (state) {
         CatalogLoadState() => const _Load(),
         CatalogDataState() => _List(
             products: state.products,
-            onTap: (product) => bloc.add(CatalogListAddEvent(product)),
+            onTap: (product) => context
+                .read<CatalogListBloc>()
+                .add(CatalogListAddEvent(product)),
           ),
       },
     );

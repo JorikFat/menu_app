@@ -5,7 +5,6 @@ import 'package:menu_app/features/catalog/catalog.dart';
 import 'package:menu_app/features/product/product.dart';
 
 class CatalogInteractor {
-  final CatalogSource sourse;
   final CartInteractor cart;
   final Catalog catalog;
   final _streamController = StreamController<Map<Product, int>>.broadcast();
@@ -13,7 +12,7 @@ class CatalogInteractor {
   CatalogInteractor({
     required this.catalog,
     required this.cart,
-    required this.sourse,
+    required CatalogSource sourse,
   }) {
     sourse.fetchProducts().then((products) {
       catalog.init(products);
@@ -38,7 +37,6 @@ class CatalogInteractor {
       onDone: onDone,
       cancelOnError: cancelOnError,
     );
-    onData.call(_mapCartProducts(catalog.state, cart.state));
   }
 
   void _updateCatalog(Map<Product, int> cartProducts) {
