@@ -1,22 +1,28 @@
 import 'dart:async';
 
 import 'package:menu_app/features/cart/cart_interactor.dart';
-import 'package:menu_app/features/catalog/catalog_controller.dart';
+import 'package:menu_app/features/catalog/catalog.dart';
 import 'package:menu_app/features/product/product.dart';
 
 class CatalogInteractor {
-  final _streamController = StreamController<Map<Product, int>>.broadcast();
+  final CatalogSource sourse;
   final CartInteractor cart;
-  final CatalogController controller;
+  final Catalog catalog;
+  final _streamController = StreamController<Map<Product, int>>.broadcast();
 
-  CatalogInteractor(this.controller, this.cart) {
-    cart.listen(_updateCatalog);
-    controller
-        .init()
-        .then((catalog) => _streamController.add(_mapCartProducts(catalog, cart.state)));
+  CatalogInteractor({
+    required this.catalog,
+    required this.cart,
+    required this.sourse,
+  }) {
+    sourse.fetchProducts().then((products) {
+      catalog.init(products);
+      _streamController.add(_mapCartProducts(catalog.state, cart.state));
+      cart.listen(_updateCatalog);
+    });
   }
 
-  Map<Product, int> get state => _mapCartProducts(controller.state, cart.state);
+  Map<Product, int> get state => _mapCartProducts(catalog.state, cart.state);
 
   void addProduct(Product product) => cart.add(product);
 
@@ -32,11 +38,11 @@ class CatalogInteractor {
       onDone: onDone,
       cancelOnError: cancelOnError,
     );
-    onData.call(_mapCartProducts(controller.state, cart.state));
+    onData.call(_mapCartProducts(catalog.state, cart.state));
   }
 
   void _updateCatalog(Map<Product, int> cartProducts) {
-    _streamController.add(_mapCartProducts(controller.state, cart.state));
+    _streamController.add(_mapCartProducts(catalog.state, cart.state));
   }
 
   Map<Product, int> _mapCartProducts(
@@ -44,4 +50,8 @@ class CatalogInteractor {
     Map<Product, int> cart,
   ) =>
       Map.fromEntries(catalog.map((it) => MapEntry(it, cart[it] ?? 0)));
+}
+
+abstract interface class CatalogSource {
+  Future<List<Product>> fetchProducts();
 }

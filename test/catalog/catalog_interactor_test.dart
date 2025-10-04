@@ -1,15 +1,15 @@
+import 'dart:core';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 @GenerateNiceMocks([MockSpec<CatalogSource>()])
-import 'package:menu_app/features/catalog/catalog_controller.dart';
+import 'package:menu_app/features/catalog/catalog.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/product/product.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'catalog_interactor_test.mocks.dart';
-
 
 void main() {
   group(CatalogInteractor, () {
@@ -23,12 +23,17 @@ void main() {
     when(mockSource.fetchProducts()).thenAnswer(
         (_) => Future.delayed(Duration.zero, () => [prod1, prod2, prod3]));
 
-    setUp(() {
+    setUp(() async {
       cart = CartInteractor(Cart());
-      catalog = CatalogInteractor(CatalogController(mockSource), cart);
+      catalog = CatalogInteractor(
+        sourse: mockSource,
+        cart: cart,
+        catalog: Catalog(),
+      );
+      await untilCalled(mockSource.fetchProducts());
     });
 
-    test('initial', () {
+    test('initial', () async {
       expect(catalog.state, {});
     });
 
@@ -89,8 +94,7 @@ void main() {
       catalog.addProduct(prod2);
       await Future(() {});
       //THEN
-      expect(catalog.state, {prod1: 3, prod2: 2, prod3: 0}
-      );
+      expect(catalog.state, {prod1: 3, prod2: 2, prod3: 0});
     });
   });
 }

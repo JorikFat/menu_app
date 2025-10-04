@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/core.dart';
 import 'package:menu_app/features/cart/cart.dart';
+import 'package:menu_app/features/cart/cart_interactor.dart';
+import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
-import 'package:menu_app/features/catalog/catalog_controller.dart';
+import 'package:menu_app/features/cart/list/cart_list_widget.dart';
+import 'package:menu_app/features/catalog/catalog.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/data/catalog_stub_source.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
-import 'package:menu_app/widgets_ext.dart';
-import 'package:menu_app/core.dart';
-import 'package:menu_app/features/cart/cart_interactor.dart';
-import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
-import 'package:menu_app/features/cart/list/cart_list_widget.dart';
 import 'package:menu_app/features/catalog/list/catalog_widget.dart';
+import 'package:menu_app/widgets_ext.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,11 +21,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
+  //TODO: create factories
   final Cart cart = Cart();
   late final CartInteractor cartInteractor = CartInteractor(cart);
   late final CatalogInteractor catalogInteractor = CatalogInteractor(
-    CatalogController(CatalogStubSource()),
-    cartInteractor,
+    catalog: Catalog(),
+    cart: cartInteractor,
+    sourse: CatalogStubSource(),
   );
   late final CartCountCubit cartCountCubit = CartCountCubit(cartInteractor);
 

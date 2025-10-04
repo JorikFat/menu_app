@@ -1,4 +1,4 @@
-import 'package:menu_app/features/catalog/catalog_controller.dart';
+import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/product/product.dart';
 
 class CatalogStubSource implements CatalogSource {
