@@ -18,7 +18,7 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
   void _update(
     CartListUpdateEvent event,
     Emitter<CartListState> emit,
-  ) { 
+  ) {
     emit(_toCartListState(event.cartState));
   }
 
@@ -26,20 +26,19 @@ class CartListBloc extends Bloc<CartListEvent, CartListState> {
     CartListAddProductEvent event,
     Emitter<CartListState> emit,
   ) {
-    _cart.add(event.product);
+    _cart.add(event.product.product);
   }
 
   void _removeProduct(
     CartListRemoveProductEvent event,
     Emitter<CartListState> emit,
   ) {
-    _cart.remove(event.product);
+    _cart.remove(event.product.product);
   }
 }
 
 CartListState _toCartListState(Map<Product, int> map) => map.isEmpty
     ? const CartEmptyState()
     : CartDataState(map.entries
-        .map((entry) =>
-            CartProduct(entry.value, entry.key.name, entry.key.price))
+        .map((entry) => CartProduct(entry.value, entry.key))
         .toList());

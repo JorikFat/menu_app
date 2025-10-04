@@ -1,23 +1,30 @@
 import 'package:menu_app/features/product/product.dart';
 
-class CartProduct extends Product {
+class CartProduct {
+  final Product _product;
   final int count;
 
   CartProduct(
     this.count,
-    super.name,
-    super.price,
+    this._product,
   );
 
-  int get amount => price * count;
+  int get amount => _product.price * count;
+
+  String get name => _product.name;
+
+  int get price => _product.price;
+
+  Product get product => _product;
 
   @override
-  int get hashCode => super.hashCode + count;
+  String toString() =>
+      '$runtimeType: ${_product.name}, price:${_product.price}, count:$count';
+
+  @override
+  int get hashCode => product.hashCode + 31 * count;
 
   @override
   bool operator ==(Object other) =>
-      super == other && other is CartProduct && other.count == count;
-
-  @override
-  String toString() => '$name, price:$price, count:$count';
+      other is CartProduct && other.product == product && other.count == count;
 }

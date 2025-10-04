@@ -37,7 +37,7 @@ void main() {
       //THEN
       expect(
         bloc.state, 
-        CartDataState([CartProduct(1, stubProduct.name, stubProduct.price)]));
+        CartDataState([CartProduct(1, stubProduct)]));
     });
 
     test('add 3 products', () async {
@@ -51,7 +51,7 @@ void main() {
       //THEN
       expect(
         bloc.state,
-        CartDataState([CartProduct(3, stubProduct.name, stubProduct.price)]));
+        CartDataState([CartProduct(3, stubProduct)]));
     });
 
     test('remove 1 products', () async {
@@ -62,14 +62,14 @@ void main() {
       cart.add(stubProduct);
       cart.add(stubProduct);
       await Future((){});
-      CartDataState([CartProduct(5, stubProduct.name, stubProduct.price)]);
+      CartDataState([CartProduct(5, stubProduct)]);
       //WHEN
       cart.remove(stubProduct);
       await Future((){});
       //THEN
       expect(
         bloc.state,
-        CartDataState([CartProduct(4, stubProduct.name, stubProduct.price)]));
+        CartDataState([CartProduct(4, stubProduct)]));
     });
 
     test('remove full products', () async {
@@ -80,7 +80,7 @@ void main() {
       await Future((){});
       expect(
         bloc.state,
-        CartDataState([CartProduct(3, stubProduct.name, stubProduct.price)]));
+        CartDataState([CartProduct(3, stubProduct)]));
       //WHEN
       cart.remove(stubProduct);
       cart.remove(stubProduct);

@@ -4,7 +4,6 @@ import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
-import 'package:menu_app/features/product/product.dart';
 import 'package:menu_app/widgets_ext.dart';
 
 class CatalogWidget extends StatelessWidget {
@@ -29,7 +28,7 @@ class CatalogWidget extends StatelessWidget {
 
 class _List extends StatelessWidget {
   final List<CartProduct> products;
-  final void Function(Product product) onTap;
+  final void Function(CartProduct product) onTap;
 
   const _List({
     required this.products,
@@ -66,7 +65,7 @@ class _Load extends StatelessWidget {
 }
 
 class _Product extends StatelessWidget {
-  final Product product;
+  final CartProduct product;
 
   const _Product(this.product, {super.key});
 

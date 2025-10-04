@@ -5,13 +5,14 @@ class Product {
   const Product(this.name, this.price);
 
   @override
-  String toString() => '$name, price:$price';
+  String toString() => '$runtimeType: $name, price:$price';
 
   @override
   int get hashCode => name.hashCode;
-  
-  @override
-  bool operator ==(Object other) =>
-    other is Product && other.name == name && other.price == price;
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Product && other.name == name && other.price == price;
+  }
 }

@@ -26,10 +26,10 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
     CatalogListAddEvent event,
     Emitter<CatalogListState> emit,
   ) {
-    interactor.addProduct(event.product);
+    interactor.addProduct(event.product.product);
   }
 
   List<CartProduct> _mapCartProducts(Map<Product, int> cart) => cart.entries
-      .map((it) => CartProduct(it.value, it.key.name, it.key.price))
+      .map((entry) => CartProduct(entry.value, entry.key))
       .toList();
 }
