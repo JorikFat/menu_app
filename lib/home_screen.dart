@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/features/cart/cart_controller.dart';
+import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/catalog/catalog_controller.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
@@ -21,8 +21,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _State extends State<HomeScreen> {
-  final CartController cartController = CartController();
-  late final CartInteractor cartInteractor = CartInteractor(cartController);
+  final Cart cart = Cart();
+  late final CartInteractor cartInteractor = CartInteractor(cart);
   late final CatalogInteractor catalogInteractor = CatalogInteractor(
     CatalogController(CatalogStubSource()),
     cartInteractor,

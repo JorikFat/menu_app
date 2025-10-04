@@ -1,6 +1,6 @@
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 
-class CartController {
+class Cart {
   final Map<Product, int> _productsCount = {};
 
   Map<Product, int> get state {

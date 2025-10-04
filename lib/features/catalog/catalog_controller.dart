@@ -1,4 +1,4 @@
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 
 class CatalogController {
   final CatalogSource _source;

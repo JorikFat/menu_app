@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart_controller.dart';
+import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 
 Product get stubProduct => const Product('stub', 1);
 
@@ -15,7 +15,7 @@ void main() {
     late CartListBloc bloc;
 
     setUp(() {
-      cart = CartInteractor(CartController());
+      cart = CartInteractor(Cart());
       bloc = CartListBloc(cart);
     });
 

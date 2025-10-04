@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 
 class CartCountCubit extends Cubit<int> {
   final CartInteractor _cart;

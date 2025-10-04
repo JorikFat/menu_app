@@ -1,24 +1,24 @@
 import 'dart:async';
 
-import 'package:menu_app/features/cart/cart_controller.dart';
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/cart/cart.dart';
+import 'package:menu_app/features/product/product.dart';
 
 class CartInteractor {
-  final CartController _controller;
+  final Cart _cart;
   final _streamController = StreamController<Map<Product, int>>.broadcast();
 
-  CartInteractor(this._controller);
+  CartInteractor(this._cart);
 
-  Map<Product, int> get state => _controller.state;
+  Map<Product, int> get state => _cart.state;
 
   void add(Product product) {
-    _controller.addProduct(product);
-    _streamController.add(_controller.state);
+    _cart.addProduct(product);
+    _streamController.add(_cart.state);
   }
 
   void remove(Product product) {
-    _controller.removeProduct(product);
-    _streamController.add(_controller.state);
+    _cart.removeProduct(product);
+    _streamController.add(_cart.state);
   }
 
   void listen(
@@ -27,12 +27,12 @@ class CartInteractor {
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-      _streamController.stream.listen(
-        onData,
-        onError: onError,
-        onDone: onDone,
-        cancelOnError: cancelOnError,
-      );
-      onData(_controller.state);
+    _streamController.stream.listen(
+      onData,
+      onError: onError,
+      onDone: onDone,
+      cancelOnError: cancelOnError,
+    );
+    onData(_cart.state);
   }
 }

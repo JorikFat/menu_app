@@ -1,15 +1,15 @@
-import 'package:menu_app/features/cart/cart_controller.dart';
+import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late CartController controller;
+  late Cart cart;
   late CartInteractor interactor;
 
   setUp(() {
-    controller = CartController();
-    interactor = CartInteractor(controller);
+    cart = Cart();
+    interactor = CartInteractor(cart);
   });
 
   test('initial is empty',(){

@@ -4,7 +4,7 @@ import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 import 'package:menu_app/widgets_ext.dart';
 
 class CatalogWidget extends StatelessWidget {

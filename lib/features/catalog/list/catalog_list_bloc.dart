@@ -3,7 +3,7 @@ import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
-import 'package:menu_app/features/product.dart';
+import 'package:menu_app/features/product/product.dart';
 
 class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
   final CatalogInteractor interactor;
