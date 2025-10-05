@@ -1,5 +1,6 @@
 import 'package:menu_app/features/product/product.dart';
 
+//TODO: add limit on 10k with throw exception
 class Cart {
   final Map<Product, int> _productsCount = {};
 

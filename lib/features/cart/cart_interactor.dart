@@ -36,7 +36,7 @@ class CartInteractor {
     onData(_cart.state);
   }
 
-  void purchase(){
+  void purchase() {
     final order = _cart.state;
     //TODO: send order
     _cart.clear();

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/amount/amount_widget.dart';
-import 'package:menu_app/features/cart/list/cart_list_events.dart';
-import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
+import 'package:menu_app/features/cart/list/cart_list_events.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
 
 class CartListWidget extends StatelessWidget {
@@ -40,9 +39,9 @@ class _Empty extends StatelessWidget {
 }
 
 class _List extends StatelessWidget {
-  final List<CartProduct> products;
-  final void Function(CartProduct product) onIncrement;
-  final void Function(CartProduct product) onDecrement;
+  final List<ProductCartViewState> products;
+  final void Function(ProductCartViewState product) onIncrement;
+  final void Function(ProductCartViewState product) onDecrement;
 
   const _List({
     super.key,
@@ -60,9 +59,9 @@ class _List extends StatelessWidget {
             itemCount: products.length,
             separatorBuilder: (_, __) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
-              final CartProduct product = products[index];
+              final ProductCartViewState product = products[index];
               return _CartProduct(
-                product: product,
+                state: product,
                 increment: () => onIncrement(product),
                 decrement: () => onDecrement(product),
               );
@@ -76,12 +75,12 @@ class _List extends StatelessWidget {
 }
 
 class _CartProduct extends StatelessWidget {
-  final CartProduct product;
+  final ProductCartViewState state;
   final VoidCallback increment;
   final VoidCallback decrement;
 
   const _CartProduct({
-    required this.product,
+    required this.state,
     required this.increment,
     required this.decrement,
     super.key,
@@ -94,16 +93,11 @@ class _CartProduct extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Expanded(child: Text(product.name)),
+            Expanded(child: Text(state.name)),
             IconButton(onPressed: decrement, icon: const Icon(Icons.remove)),
-            Text(product.count.toString()),
+            Text(state.count),
             IconButton(onPressed: increment, icon: const Icon(Icons.add)),
-            Expanded(
-              child: Text(
-                'сумма:${product.amount}р', //TODO: move text to state
-                textAlign: TextAlign.end,
-              ),
-            ),
+            Expanded(child: Text(state.amount, textAlign: TextAlign.end)),
           ],
         ),
       ),

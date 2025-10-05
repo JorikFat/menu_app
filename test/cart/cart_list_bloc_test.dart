@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:menu_app/features/cart/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
-import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
 import 'package:menu_app/features/product/product.dart';
@@ -9,7 +8,6 @@ import 'package:menu_app/features/product/product.dart';
 Product get stubProduct => const Product('stub', 1);
 
 void main() {
-
   group(CartListBloc, () {
     late CartInteractor cart;
     late CartListBloc bloc;
@@ -20,7 +18,7 @@ void main() {
     });
 
     tearDown(() async {
-      await Future((){});
+      await Future(() {});
       await bloc.close();
     });
 
@@ -33,11 +31,12 @@ void main() {
       expect(bloc.state, const CartEmptyState());
       //WHEN
       cart.add(stubProduct);
-      await Future((){});
+      await Future(() {});
       //THEN
       expect(
-        bloc.state, 
-        CartDataState([CartProduct(1, stubProduct)]));
+        bloc.state,
+        CartDataState([ProductCartViewState.product(stubProduct, count: 1)]),
+      );
     });
 
     test('add 3 products', () async {
@@ -47,11 +46,12 @@ void main() {
       cart.add(stubProduct);
       cart.add(stubProduct);
       cart.add(stubProduct);
-      await Future((){});
+      await Future(() {});
       //THEN
       expect(
         bloc.state,
-        CartDataState([CartProduct(3, stubProduct)]));
+        CartDataState([ProductCartViewState.product(stubProduct, count: 3)]),
+      );
     });
 
     test('remove 1 products', () async {
@@ -61,15 +61,18 @@ void main() {
       cart.add(stubProduct);
       cart.add(stubProduct);
       cart.add(stubProduct);
-      await Future((){});
-      CartDataState([CartProduct(5, stubProduct)]);
+      await Future(() {});
+      CartDataState(
+        [ProductCartViewState.product(stubProduct, count: 5)],
+      );
       //WHEN
       cart.remove(stubProduct);
-      await Future((){});
+      await Future(() {});
       //THEN
       expect(
         bloc.state,
-        CartDataState([CartProduct(4, stubProduct)]));
+        CartDataState([ProductCartViewState.product(stubProduct, count: 4)]),
+      );
     });
 
     test('remove full products', () async {
@@ -77,15 +80,18 @@ void main() {
       cart.add(stubProduct);
       cart.add(stubProduct);
       cart.add(stubProduct);
-      await Future((){});
+      await Future(() {});
       expect(
         bloc.state,
-        CartDataState([CartProduct(3, stubProduct)]));
+        CartDataState(
+          [ProductCartViewState.product(stubProduct, count: 3)],
+        ),
+      );
       //WHEN
       cart.remove(stubProduct);
       cart.remove(stubProduct);
       cart.remove(stubProduct);
-      await Future((){});
+      await Future(() {});
       //THEN
       expect(bloc.state, const CartEmptyState());
     });
