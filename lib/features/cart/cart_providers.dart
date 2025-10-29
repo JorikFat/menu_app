@@ -21,5 +21,6 @@ final cartProviders = [
   ),
   BlocProvider<AmountBloc>(
     create: (context) => AmountBloc(context.read<CartInteractor>()),
+    lazy: false,
   ),
 ];

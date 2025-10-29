@@ -1,85 +1,66 @@
-import 'package:menu_app/features/cart/business/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/product/product.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+@GenerateNiceMocks([MockSpec<Cart>()])
+import 'package:menu_app/features/cart/business/cart.dart';
+
+import 'cart_interactor_test.mocks.dart';
 
 void main() {
   late Cart cart;
   late CartInteractor interactor;
 
   setUp(() {
-    cart = Cart();
+    cart = MockCart();
     interactor = CartInteractor(cart);
   });
 
-  test('initial is empty',(){
+  test('initial is empty', () {
     expect(interactor.state, {});
+    verifyNever(cart.addProduct(TestProduct()));
   });
 
   test('add one product', () async {
-    //GIVEN
-    const Product prod1 = Product('stub1', 1);
-    const Product prod2 = Product('stub2', 2);
-    //WHEN
-    interactor.add(prod1);
-    interactor.add(prod2);
-    //THEN
-    expect(interactor.state, {prod1: 1, prod2: 1});
+    when(cart.state).thenReturn({TestProduct(): 1});
+    expectLater(interactor.stream, emits({TestProduct(): 1}));
+    interactor.add(TestProduct());
+    verify(cart.addProduct(TestProduct()));
   });
 
   test('add two products', () {
-    //GIVEN
-    const Product prod1 = Product('stub1', 1);
-    const Product prod2 = Product('stub2', 2);
-    //WHEN
-    interactor.add(prod1);
-    interactor.add(prod2);
-    //THEN
-    expect(interactor.state, {prod1: 1, prod2: 1});
+    when(cart.state).thenReturnInOrder([
+      {TestProduct(1): 1},
+      {TestProduct(2): 2},
+    ]);
+    expectLater(
+        interactor.stream,
+        emitsInOrder([
+          {TestProduct(1): 1},
+          {TestProduct(2): 2},
+        ]));
+    interactor.add(TestProduct(1));
+    interactor.add(TestProduct(2));
+    verify(cart.addProduct(TestProduct(1)));
+    verify(cart.addProduct(TestProduct(2)));
   });
 
-  test('add one product 3 times and second 2 times', (){
-    //GIVEN
-    const Product prod1 = Product('stub1', 1);
-    const Product prod2 = Product('stub2', 2);
-    //WHEN
-    interactor.add(prod1);
-    interactor.add(prod1);
-    interactor.add(prod1);
-    interactor.add(prod2);
-    interactor.add(prod2);
-    //THEN
-    expect(interactor.state, {prod1: 3, prod2: 2});
+  test('remove one product', () {
+    when(cart.state).thenReturn({TestProduct(): 1});
+    expectLater(interactor.stream, emits({TestProduct(): 1}));
+    interactor.remove(TestProduct());
+    verify(cart.removeProduct(TestProduct()));
   });
 
-  test('remove one product', (){
-    //GIVEN
-    const Product prod1 = Product('stub1', 1);
-    const Product prod2 = Product('stub2', 2);
-    interactor.add(prod1);
-    interactor.add(prod1);
-    interactor.add(prod2);
-    interactor.add(prod2);
-    //WHEN
-    interactor.remove(prod1);
-    //THEN
-    expect(interactor.state, {prod1: 1, prod2: 2});
+  test('clear', () {
+    when(cart.state).thenReturn({TestProduct(): 1});
+    expectLater(interactor.stream, emits({TestProduct(): 1}));
+    interactor.purchase();
+    verify(cart.clear());
   });
+}
 
-    test('remove all products', (){
-    //GIVEN
-    const Product prod1 = Product('stub1', 1);
-    const Product prod2 = Product('stub2', 2);
-    interactor.add(prod1);
-    interactor.add(prod1);
-    interactor.add(prod2);
-    interactor.add(prod2);
-    //WHEN
-    interactor.remove(prod1);
-    interactor.remove(prod1);
-    interactor.remove(prod2);
-    interactor.remove(prod2);
-    //THEN
-    expect(interactor.state, {});
-  });
+class TestProduct extends Product {
+  TestProduct([int index = 0]) : super('$index', index);
 }

@@ -17,7 +17,7 @@ class CatalogInteractor {
     sourse.fetchProducts().then((products) {
       catalog.init(products);
       _streamController.add(_mapCartProducts(catalog.state, cart.state));
-      cart.listen(_updateCatalog);
+      cart.stream.listen(_updateCatalog);
     });
   }
 

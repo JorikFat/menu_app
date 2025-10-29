@@ -9,7 +9,7 @@ class AmountBloc extends Bloc<AmountEvent, AmountState> {
   AmountBloc(this._cart) : super(const AmountState()) {
     on<AmountPurchaseEvent>(_purchase);
     on<AmountChangeEvent>(_update);
-    _cart.listen((order) => add(AmountChangeEvent(order)));
+    _cart.stream.listen((order) => add(AmountChangeEvent(order)));
   }
 
   void _purchase(
