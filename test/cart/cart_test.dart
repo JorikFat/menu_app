@@ -75,4 +75,22 @@ void main() {
     //THEN
     expect(cart.state, {});
   });
+
+  test('clear', (){
+    //GIVEN
+    const Product prod1 = Product('stub1', 1);
+    const Product prod2 = Product('stub2', 2);
+    cart.addProduct(prod1);
+    cart.addProduct(prod1);
+    cart.addProduct(prod2);
+    cart.addProduct(prod2);
+    //WHEN
+    cart.clear();
+    // cart.removeProduct(prod1);
+    // cart.removeProduct(prod1);
+    // cart.removeProduct(prod2);
+    // cart.removeProduct(prod2);
+    //THEN
+    expect(cart.state, {});
+  });
 }
