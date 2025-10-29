@@ -1,4 +1,4 @@
-import 'package:menu_app/features/cart/cart.dart';
+import 'package:menu_app/features/cart/business/cart.dart';
 import 'package:menu_app/features/product/product.dart';
 import 'package:test/test.dart';
 

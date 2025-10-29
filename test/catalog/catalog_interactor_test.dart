@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart.dart';
+import 'package:menu_app/features/cart/business/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 @GenerateNiceMocks([MockSpec<CatalogSource>()])
 import 'package:menu_app/features/catalog/catalog.dart';

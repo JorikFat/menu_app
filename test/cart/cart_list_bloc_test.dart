@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/cart/cart.dart';
+import 'package:menu_app/features/cart/business/cart.dart';
 import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
