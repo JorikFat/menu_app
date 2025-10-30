@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:menu_app/core/extensions.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
@@ -30,6 +31,6 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
   }
 
   List<CartProduct> _mapCartProducts(Map<Product, int> cart) => cart.entries
-      .map((entry) => CartProduct(entry.value, entry.key))
+      .map((entry) => CartProduct(entry.value.takeIf((it) => it > 0), entry.key))
       .toList();
 }

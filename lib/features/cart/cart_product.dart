@@ -1,15 +1,16 @@
 import 'package:menu_app/features/product/product.dart';
 
+@deprecated
 class CartProduct {
   final Product _product;
-  final int count;
+  final int? count;
 
   CartProduct(
     this.count,
     this._product,
   );
 
-  int get amount => _product.price * count;
+  int get amount => _product.price * (count ?? 0);
 
   String get name => _product.name;
 
@@ -22,7 +23,7 @@ class CartProduct {
       '$runtimeType: ${_product.name}, price:${_product.price}, count:$count';
 
   @override
-  int get hashCode => product.hashCode + 31 * count;
+  int get hashCode => product.hashCode + 31 * (count ?? 0);
 
   @override
   bool operator ==(Object other) =>
