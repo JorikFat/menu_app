@@ -14,8 +14,8 @@ class CatalogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CatalogListBloc, CatalogListState>(
       builder: (context, state) => switch (state) {
-        CatalogLoadState() => const _Load(),
-        CatalogDataState() => _List(
+        CatalogLoadState() => const CatalogLoadingWidget(),
+        CatalogDataState() => CatalogListWidget(
             products: state.products,
             onTap: (product) => context
                 .read<CatalogListBloc>()
@@ -26,11 +26,11 @@ class CatalogWidget extends StatelessWidget {
   }
 }
 
-class _List extends StatelessWidget {
+class CatalogListWidget extends StatelessWidget {
   final List<CartProduct> products;
   final void Function(CartProduct product) onTap;
 
-  const _List({
+  const CatalogListWidget({
     required this.products,
     required this.onTap,
     super.key,
@@ -53,8 +53,8 @@ class _List extends StatelessWidget {
   }
 }
 
-class _Load extends StatelessWidget {
-  const _Load();
+class CatalogLoadingWidget extends StatelessWidget {
+  const CatalogLoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

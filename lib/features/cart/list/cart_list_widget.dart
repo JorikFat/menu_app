@@ -12,7 +12,7 @@ class CartListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartListBloc, CartListState>(
       builder: (context, state) => switch (state) {
-        CartEmptyState() => const _Empty(),
+        CartEmptyState() => const CartEmptyWidget(),
         CartDataState() => _List(
             products: state.list,
             onIncrement: (product) => context
@@ -27,8 +27,8 @@ class CartListWidget extends StatelessWidget {
   }
 }
 
-class _Empty extends StatelessWidget {
-  const _Empty({super.key});
+class CartEmptyWidget extends StatelessWidget {
+  const CartEmptyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
