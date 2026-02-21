@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:menu_app/core/extensions.dart';
+import 'package:menu_app/extensions.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_list_widget.dart';
 import 'package:menu_app/features/catalog/list/catalog_widget.dart';
