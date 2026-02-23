@@ -44,3 +44,4 @@ app.*.map.json
 
 **.mocks.dart
 coverage/
+/test/golden/failures
