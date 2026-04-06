@@ -10,8 +10,12 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
   final CatalogInteractor interactor;
 
   CatalogListBloc(this.interactor) : super(const CatalogLoadState()) {
-    on<CatalogListUpdateEvent>(_updateCatalog);
-    on<CatalogListAddEvent>(_addProduct);
+    on<CatalogListEvent>(
+      (event, emit) => switch (event) {
+        CatalogListUpdateEvent() => _updateCatalog(event, emit),
+        CatalogListAddEvent() => _addProduct(event, emit),
+      },
+    );
     interactor.listen(
         (catalog) => add(CatalogListUpdateEvent(_mapCartProducts(catalog))));
   }
@@ -31,6 +35,7 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
   }
 
   List<CartProduct> _mapCartProducts(Map<Product, int> cart) => cart.entries
-      .map((entry) => CartProduct(entry.value.takeIf((it) => it > 0), entry.key))
+      .map(
+          (entry) => CartProduct(entry.value.takeIf((it) => it > 0), entry.key))
       .toList();
 }

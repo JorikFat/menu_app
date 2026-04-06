@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/home_screen.dart';
+import 'package:menu_app/screens/home_screen.dart';
 import 'package:menu_app/main.dart';
 
 void main() {
