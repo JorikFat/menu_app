@@ -15,7 +15,7 @@ void main() {
   
   testWidgets('loaded', (tester) async {
     await tester.pumpWidget(const MyApp());
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(const Duration(seconds: 2));//FIXME: remove specific duration
 
     await expectLater(
       find.byType(HomeScreen),
@@ -25,7 +25,7 @@ void main() {
 
   testWidgets('filled', (tester) async {
     await tester.pumpWidget(const MyApp());
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(const Duration(seconds: 2));//FIXME: remove specific duration
 
     await tester.tap(find.text("Бургер"));
 
@@ -50,4 +50,6 @@ void main() {
       matchesGoldenFile('catalog_filled.png'),
     );
   });
+
+  //TODO: add reselect test
 }

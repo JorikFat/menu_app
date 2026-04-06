@@ -6,6 +6,6 @@ class CatalogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CatalogWidget();
+    return catalogBlocProvider(const CatalogWidget());
   }
 }

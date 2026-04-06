@@ -9,15 +9,26 @@ import 'package:menu_app/features/product/product.dart';
 class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
   final CatalogInteractor interactor;
 
-  CatalogListBloc(this.interactor) : super(const CatalogLoadState()) {
+  CatalogListBloc(this.interactor)
+      : super(
+          interactor.state.isEmpty
+              ? const CatalogListState.load()
+              : CatalogListState.data(_mapCartProducts(interactor.state)),
+        ) {
     on<CatalogListEvent>(
       (event, emit) => switch (event) {
         CatalogListUpdateEvent() => _updateCatalog(event, emit),
         CatalogListAddEvent() => _addProduct(event, emit),
       },
     );
-    interactor.listen(
+    interactor.stream.listen(
         (catalog) => add(CatalogListUpdateEvent(_mapCartProducts(catalog))));
+  }
+
+  @override
+  Future<void> close() async {
+    await interactor.close();
+    return super.close();
   }
 
   void _updateCatalog(
@@ -33,9 +44,8 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
   ) {
     interactor.addProduct(event.product.product);
   }
-
-  List<CartProduct> _mapCartProducts(Map<Product, int> cart) => cart.entries
-      .map(
-          (entry) => CartProduct(entry.value.takeIf((it) => it > 0), entry.key))
-      .toList();
 }
+
+List<CartProduct> _mapCartProducts(Map<Product, int> cart) => cart.entries
+    .map((entry) => CartProduct(entry.value.takeIf((it) => it > 0), entry.key))
+    .toList();

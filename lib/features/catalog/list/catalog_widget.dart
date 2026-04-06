@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/extensions.dart';
 import 'package:menu_app/features/cart/cart_product.dart';
+import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
+
+BlocProvider catalogBlocProvider([Widget? child]) => BlocProvider<CatalogListBloc>(
+  create: (context) => CatalogListBloc(
+    context.read<CatalogInteractor>(),
+  ),
+  child: child,
+);
 
 class CatalogWidget extends StatelessWidget {
 

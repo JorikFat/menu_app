@@ -22,9 +22,13 @@ class CatalogInteractor {
   }
 
   Map<Product, int> get state => _mapCartProducts(catalog.state, cart.state);
+  Stream<Map<Product, int>> get stream => _streamController.stream;
+
+  Future<void> close() => _streamController.close();
 
   void addProduct(Product product) => cart.add(product);
 
+  @deprecated
   void listen(
     void Function(Map<Product, int>) onData, {
     void Function(Object error)? onError,

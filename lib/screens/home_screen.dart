@@ -4,9 +4,7 @@ import 'package:menu_app/extensions.dart';
 import 'package:menu_app/features/cart/cart_providers.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
 import 'package:menu_app/features/cart/list/cart_list_widget.dart';
-import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/catalog_providers.dart';
-import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/screens/catalog_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +28,6 @@ class _State extends State<HomeScreen> {
       providers: [
         ...cartProviders,
         ...catalogProviders,
-        BlocProvider(
-          create: (context) => CatalogListBloc(
-            context.read<CatalogInteractor>(),
-          ),
-        ),
       ],
       child: Scaffold(
         appBar: AppBar(
