@@ -76,7 +76,7 @@ void main() {
       cart.remove(stubProduct);
       await Future((){});
       //THEN
-      expect(count.state, 0);
+      expect(count.state, null);
     });
   });
 }
