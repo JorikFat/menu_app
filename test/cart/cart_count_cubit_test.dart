@@ -21,13 +21,13 @@ void main() {
       await count.close();
     });
 
-    test('initial count is 0', () {
-      expect(count.state, 0);
+    test('initial count is null', () {
+      expect(count.state, null);
     });
 
     test('add 1 product', () async {
       //GIVEN
-      expect(count.state, 0);
+      expect(count.state, null);
       //WHEN
       cart.add(stubProduct);
       await Future((){});
@@ -37,7 +37,7 @@ void main() {
 
     test('add 3 products', () async {
       //GIVEN
-      expect(count.state, 0);
+      expect(count.state, null);
       //WHEN
       cart.add(stubProduct);
       cart.add(stubProduct);
