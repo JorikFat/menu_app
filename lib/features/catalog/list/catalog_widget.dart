@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/extensions.dart';
-import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_bloc.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
+import 'package:menu_app/features/product/product.dart';
 
-BlocProvider catalogBlocProvider([Widget? child]) => BlocProvider<CatalogListBloc>(
-  create: (context) => CatalogListBloc(
-    context.read<CatalogInteractor>(),
-  ),
-  child: child,
-);
+BlocProvider catalogBlocProvider([Widget? child]) =>
+    BlocProvider<CatalogListBloc>(
+      create: (context) => CatalogListBloc(
+        context.read<CatalogInteractor>(),
+      ),
+      child: child,
+    );
 
 class CatalogWidget extends StatelessWidget {
-
   const CatalogWidget({super.key});
 
   @override
@@ -35,8 +35,8 @@ class CatalogWidget extends StatelessWidget {
 }
 
 class CatalogListWidget extends StatelessWidget {
-  final List<CartProduct> products;
-  final void Function(CartProduct product) onTap;
+  final Map<Product, int?> products;
+  final void Function(Product product) onTap;
 
   const CatalogListWidget({
     required this.products,
@@ -51,10 +51,10 @@ class CatalogListWidget extends StatelessWidget {
       itemCount: products.length,
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
-        final CartProduct product = products[index];
+        final MapEntry<Product, int?> product = products.entries.toList()[index];
         return InkWell(
-          onTap: () => onTap(product),
-          child: _Product(product).badge(product.count),
+          onTap: () => onTap(product.key),
+          child: _Product(product.key).badge(product.value),
         );
       },
     );
@@ -73,9 +73,9 @@ class CatalogLoadingWidget extends StatelessWidget {
 }
 
 class _Product extends StatelessWidget {
-  final CartProduct product;
+  final Product product;
 
-  const _Product(this.product, {super.key});
+  const _Product(this.product);
 
   @override
   Widget build(BuildContext context) {

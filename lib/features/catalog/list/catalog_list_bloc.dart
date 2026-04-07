@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/extensions.dart';
-import 'package:menu_app/features/cart/cart_product.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_event.dart';
 import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
@@ -17,12 +16,12 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
         ) {
     on<CatalogListEvent>(
       (event, emit) => switch (event) {
-        CatalogListUpdateEvent() => _updateCatalog(event, emit),
-        CatalogListAddEvent() => _addProduct(event, emit),
+        CatalogListUpdateEvent() => emit(CatalogListState.data(event.products)),
+        CatalogListAddEvent() => interactor.addProduct(event.product),
       },
     );
     interactor.stream.listen(
-        (catalog) => add(CatalogListUpdateEvent(_mapCartProducts(catalog))));
+        (catalog) => add(CatalogListEvent.update(_mapCartProducts(catalog))));
   }
 
   @override
@@ -30,22 +29,7 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
     await interactor.close();
     return super.close();
   }
-
-  void _updateCatalog(
-    CatalogListUpdateEvent event,
-    Emitter<CatalogListState> emit,
-  ) {
-    emit(CatalogDataState(event.products));
-  }
-
-  void _addProduct(
-    CatalogListAddEvent event,
-    Emitter<CatalogListState> emit,
-  ) {
-    interactor.addProduct(event.product.product);
-  }
 }
 
-List<CartProduct> _mapCartProducts(Map<Product, int> cart) => cart.entries
-    .map((entry) => CartProduct(entry.value.takeIf((it) => it > 0), entry.key))
-    .toList();
+Map<Product, int?> _mapCartProducts(Map<Product, int> cart) => cart.map(
+    (key, value) => MapEntry<Product, int?>(key, value.takeIf((it) => it > 0)));
