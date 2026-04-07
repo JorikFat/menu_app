@@ -4,7 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 @GenerateNiceMocks([MockSpec<Cart>()])
-import 'package:menu_app/features/cart/business/cart.dart';
+import 'package:menu_app/features/cart/cart.dart';
 
 import 'cart_interactor_test.mocks.dart';
 

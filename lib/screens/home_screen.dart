@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/extensions.dart';
 import 'package:menu_app/features/cart/cart_providers.dart';
 import 'package:menu_app/features/cart/count/cart_count_cubit.dart';
-import 'package:menu_app/features/cart/list/cart_list_widget.dart';
 import 'package:menu_app/features/catalog/catalog_providers.dart';
+import 'package:menu_app/screens/cart_screen.dart';
 import 'package:menu_app/screens/catalog_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _State extends State<HomeScreen> {
   final List<Widget> pages = const [
     CatalogScreen(),
-    CartListWidget(),
+    CartScreen(),
   ];
   int _pageIndex = 0;
 
