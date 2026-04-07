@@ -20,6 +20,7 @@ void main() {
 
     testWidgets('cart', (tester) async {
       await tester.pumpWidget(const MyApp());
+      await tester.pump(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byIcon(Icons.shopping_cart));
