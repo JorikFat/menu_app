@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/extensions.dart';
 import 'package:menu_app/features/catalog/catalog_interactor.dart';
@@ -6,6 +8,7 @@ import 'package:menu_app/features/catalog/list/catalog_list_state.dart';
 import 'package:menu_app/features/product/product.dart';
 
 class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
+  StreamSubscription? _sub;
   final CatalogInteractor interactor;
 
   CatalogListBloc(this.interactor)
@@ -20,13 +23,13 @@ class CatalogListBloc extends Bloc<CatalogListEvent, CatalogListState> {
         CatalogListAddEvent() => interactor.addProduct(event.product),
       },
     );
-    interactor.stream.listen(
+    _sub = interactor.stream.listen(
         (catalog) => add(CatalogListEvent.update(_mapCartProducts(catalog))));
   }
 
   @override
-  Future<void> close() async {
-    await interactor.close();
+  Future<void> close() async{
+    await _sub?.cancel();
     return super.close();
   }
 }

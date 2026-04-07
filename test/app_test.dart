@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:menu_app/features/catalog/list/catalog_widget.dart';
+import 'package:menu_app/features/catalog/list/catalog_list_widget.dart';
 import 'package:menu_app/main.dart';
 
 void main() {

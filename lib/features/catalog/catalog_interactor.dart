@@ -16,7 +16,7 @@ class CatalogInteractor {
   }) {
     sourse.fetchProducts().then((products) {
       catalog.init(products);
-      _streamController.add(_mapCartProducts(catalog.state, cart.state));
+      _updateCatalog(cart.state);
       cart.stream.listen(_updateCatalog);
     });
   }
@@ -24,24 +24,7 @@ class CatalogInteractor {
   Map<Product, int> get state => _mapCartProducts(catalog.state, cart.state);
   Stream<Map<Product, int>> get stream => _streamController.stream;
 
-  Future<void> close() => _streamController.close();
-
   void addProduct(Product product) => cart.add(product);
-
-  @deprecated
-  void listen(
-    void Function(Map<Product, int>) onData, {
-    void Function(Object error)? onError,
-    void Function()? onDone,
-    bool? cancelOnError,
-  }) {
-    _streamController.stream.listen(
-      onData,
-      onError: onError,
-      onDone: onDone,
-      cancelOnError: cancelOnError,
-    );
-  }
 
   void _updateCatalog(Map<Product, int> cartProducts) {
     _streamController.add(_mapCartProducts(catalog.state, cart.state));
