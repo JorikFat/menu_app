@@ -26,7 +26,7 @@ class AmountWidget extends StatelessWidget {
 class _Amount extends StatelessWidget {
   final String text;
 
-  const _Amount(this.text, {super.key});
+  const _Amount(this.text);
 
   @override
   Widget build(BuildContext context) => Text(
@@ -39,7 +39,7 @@ class _Amount extends StatelessWidget {
 class _Purchase extends StatelessWidget {
   final VoidCallback callback;
 
-  const _Purchase(this.callback, {super.key});
+  const _Purchase(this.callback);
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

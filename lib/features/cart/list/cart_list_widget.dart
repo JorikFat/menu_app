@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:menu_app/features/cart/amount/amount_widget.dart';
+import 'package:menu_app/features/cart/cart_interactor.dart';
 import 'package:menu_app/features/cart/list/cart_list_bloc.dart';
 import 'package:menu_app/features/cart/list/cart_list_events.dart';
 import 'package:menu_app/features/cart/list/cart_list_states.dart';
+
+BlocProvider cartBlocProvider([Widget? child]) => BlocProvider<CartListBloc>(
+      create: (context) => CartListBloc(
+        context.read<CartInteractor>(),
+      ),
+      child: child,
+    );
 
 class CartListWidget extends StatelessWidget {
   const CartListWidget({super.key});
@@ -44,7 +52,6 @@ class _List extends StatelessWidget {
   final void Function(ProductCartViewState product) onDecrement;
 
   const _List({
-    super.key,
     required this.products,
     required this.onIncrement,
     required this.onDecrement,
@@ -83,7 +90,6 @@ class _CartProduct extends StatelessWidget {
     required this.state,
     required this.increment,
     required this.decrement,
-    super.key,
   });
 
   @override
